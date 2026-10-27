@@ -1,0 +1,17 @@
+---
+import type { Review } from '../data/reviews';
+interface Props { review: Review }
+const { review } = Astro.props;
+---
+<figure class="card review" data-spotlight>
+  <div class="stars" role="img" aria-label={`${review.rating} out of 5 stars`}>{'★'.repeat(review.rating)}</div>
+  <blockquote>“{review.text}”</blockquote>
+  <figcaption><strong>{review.author}</strong>{review.context && <span> · {review.context}</span>}<span class="src"> · {review.source}</span></figcaption>
+</figure>
+<style>
+  .review { margin: 0; display: flex; flex-direction: column; gap: 14px; }
+  .stars { color: #f5c451; letter-spacing: 3px; }
+  blockquote { margin: 0; font: italic 500 1.15rem/1.5 var(--font-display); flex: 1; }
+  figcaption { font-size: 0.9rem; color: var(--mist-dim); }
+  figcaption strong { color: var(--mist); }
+</style>

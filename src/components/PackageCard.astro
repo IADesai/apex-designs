@@ -1,0 +1,26 @@
+---
+import type { Package } from '../data/packages';
+interface Props { pkg: Package }
+const { pkg } = Astro.props;
+---
+<article class:list={['card', 'pkg', { featured: pkg.featured }]} data-spotlight>
+  {pkg.featured && <span class="tag">Most popular</span>}
+  <h3>{pkg.name}</h3>
+  <p class="price"><span class="amount">{pkg.price}</span>{pkg.priceNote && <span class="note">{pkg.priceNote}</span>}</p>
+  <p class="muted">{pkg.blurb}</p>
+  {pkg.includesFrom && <p class="from">{pkg.includesFrom}</p>}
+  <ul>{pkg.features.map((f) => <li>{f}</li>)}</ul>
+  <a class:list={['btn', pkg.featured ? 'btn-primary' : 'btn-ghost']} href={`/quote/?package=${pkg.id}`} data-track={`package-${pkg.id}`}>Get a quote</a>
+</article>
+<style>
+  .pkg { display: flex; flex-direction: column; gap: 6px; }
+  .featured { border-color: rgb(95 211 181 / 0.45); box-shadow: 0 30px 80px -40px rgb(95 211 181 / 0.5); }
+  .tag { align-self: flex-start; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); background: var(--teal-glow); padding: 0.35em 0.8em; border-radius: 999px; margin-bottom: 8px; }
+  .price { display: flex; align-items: baseline; gap: 10px; margin: 4px 0 8px; }
+  .amount { font: 600 clamp(2.4rem, 4vw, 3.2rem)/1 var(--font-display); }
+  .note { color: var(--mist-dim); }
+  .from { font-size: 0.85rem; font-weight: 600; color: var(--teal-glow); margin: 8px 0 0; }
+  ul { list-style: none; padding: 0; margin: 8px 0 24px; display: grid; gap: 10px; flex: 1; }
+  li { padding-left: 26px; position: relative; }
+  li::before { content: ''; position: absolute; left: 0; top: 0.45em; width: 14px; height: 8px; border-left: 2px solid var(--teal-glow); border-bottom: 2px solid var(--teal-glow); transform: rotate(-45deg); }
+</style>
