@@ -1,7 +1,117 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
+import PackageCard from '../components/PackageCard.astro';
+import ReviewCard from '../components/ReviewCard.astro';
+import WorkCard from '../components/WorkCard.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { packages } from '../data/packages';
+import { reviews } from '../data/reviews';
+import { locations } from '../data/locations';
+
+const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+const why = [
+  { n: '01', title: 'Built around your customers', text: 'Every page is planned around what your customers need to see and do, not around a template.' },
+  { n: '02', title: 'Fast by default', text: 'Lightweight, modern builds that load quickly on phones and give Google what it looks for.' },
+  { n: '03', title: 'One person, start to finish', text: 'You talk to the person designing and building your site. Quick answers, no hand-offs.' },
+];
+const steps = [
+  { title: 'Chat', text: 'A free consultation call or WhatsApp chat about your business and goals.' },
+  { title: 'Plan', text: 'A scheduled development plan with clear dates and a fixed price.' },
+  { title: 'Build', text: 'I design and build your site, and you see progress along the way.' },
+  { title: 'Launch & grow', text: 'We go live, connect Google, and keep improving with ongoing support.' },
+];
 ---
-<BaseLayout title="Web Design Romford & East London" description="Fast, custom websites for local businesses in Romford, East London and Essex. Clear prices from £300.">
+<BaseLayout
+  title="Web Design Romford & East London"
+  description="Romford web designer building fast, custom websites for local businesses across East London and Essex. Clear packages from £300. Rated Excellent on Google."
+>
   <Hero />
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Why Apex</span>
+      <h2 class="narrow">A website should bring you customers, <span class="accent">not headaches.</span></h2>
+      <div class="grid-3 why" data-reveal-stagger>
+        {why.map((w) => (
+          <article class="card" data-spotlight>
+            <span class="num">{w.n}</span>
+            <h3>{w.title}</h3>
+            <p class="muted">{w.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section work-sec">
+    <div class="container">
+      <div class="head">
+        <div><span class="eyebrow">Selected work</span><h2>Sites that do the job</h2></div>
+        <a class="btn btn-ghost" href="/work/" data-track="home-all-work">All work</a>
+      </div>
+      <div class="grid-2" data-reveal-stagger>{work.map((entry) => <WorkCard entry={entry} />)}</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Packages</span>
+      <h2>Clear prices, <span class="accent">no surprises.</span></h2>
+      <p class="lead">Pick a starting point. Every package is custom-built, and you will know the price before any work begins.</p>
+      <div class="grid-3 pk" data-reveal-stagger>{packages.map((p) => <PackageCard pkg={p} />)}</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">How it works</span>
+      <h2>From first chat to launch</h2>
+      <ol class="steps" data-reveal-stagger>
+        {steps.map((s, i) => (
+          <li class="card"><span class="num">{String(i + 1).padStart(2, '0')}</span><h3>{s.title}</h3><p class="muted">{s.text}</p></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Reviews</span>
+      <h2>Rated <span class="accent">Excellent</span> on Google</h2>
+      <div class="grid-3 reviews" data-reveal-stagger>{reviews.map((r) => <ReviewCard review={r} />)}</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid-2 areas">
+      <div data-reveal>
+        <span class="eyebrow">Where I work</span>
+        <h2>Romford-based, working UK-wide</h2>
+        <p class="lead">Based in Romford, building for businesses across Havering, East London and Essex, with clients as far as Oxford.</p>
+      </div>
+      <ul class="area-list" data-reveal-stagger>
+        {locations.map((l) => (
+          <li><a class="card" href={`/${l.slug}/`} data-spotlight><span>{l.title}</span><span aria-hidden="true">→</span></a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand />
 </BaseLayout>
+
+<style>
+  .narrow { max-width: 20ch; }
+  .why { margin-top: 48px; }
+  .num { font: 600 0.85rem/1 var(--font-body); color: var(--teal-glow); letter-spacing: 0.1em; display: block; margin-bottom: 18px; }
+  .head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
+  .work-sec { background: linear-gradient(180deg, transparent, rgb(62 125 110 / 0.07), transparent); }
+  .pk, .reviews { margin-top: 40px; }
+  .steps { list-style: none; padding: 0; margin: 40px 0 0; display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+  .areas { align-items: center; }
+  .area-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .area-list a { display: flex; justify-content: space-between; align-items: center; padding: 22px 24px; text-decoration: none; font: 600 1.2rem/1.2 var(--font-display); }
+  .area-list a:hover { border-color: rgb(95 211 181 / 0.45); }
+</style>
