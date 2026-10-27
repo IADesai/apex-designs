@@ -27,6 +27,10 @@ describe('auditPage', () => {
     expect(auditPage(good(), '404.html').errors).toContain('must be noindex');
     expect(auditPage(good('<meta name="robots" content="noindex, nofollow">'), 'admin/index.html').errors).toEqual([]);
   });
+  it('requires the home hero to default to the fallback state', () => {
+    expect(auditPage(good(), 'index.html').errors).toContain('home hero must default to data-hero="fallback"');
+    expect(auditPage(good('<section data-hero="fallback"></section>'), 'index.html').errors).toEqual([]);
+  });
   it('rejects noindex on public pages', () => {
     expect(auditPage(good('<meta name="robots" content="noindex, nofollow">'), 'services/index.html').errors).toContain('unexpected noindex');
   });

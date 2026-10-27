@@ -21,6 +21,8 @@ export function auditPage(html, relPath) {
   if ((isAdmin || is404) && !noindex) errors.push('must be noindex');
   if (!isAdmin && !is404 && noindex) errors.push('unexpected noindex');
 
+  if (relPath === 'index.html' && !/data-hero="fallback"/.test(html)) errors.push('home hero must default to data-hero="fallback"');
+
   return { title, errors };
 }
 
