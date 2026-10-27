@@ -1,7 +1,7 @@
 # Apex Designs — Site Revamp + Mini-CRM — Design Spec
 
 Date: 2026-10-27
-Status: Approved in chat, awaiting written-spec review
+Status: Approved (written spec reviewed 2026-10-27)
 
 ## 1. Goal
 
@@ -37,7 +37,7 @@ GitHub repo ──(push main)──> GitHub Actions: npm ci && astro build ─�
                                                                         │
 Browser ── static HTML/CSS + small JS islands ─────────────────────────┘
    │  tracker.ts (consent-aware)  ── insert ──> Supabase Postgres (events, visitors)   [RLS: anon insert-only]
-   │  quote form                  ── POST  ──> Supabase Edge Function submit-lead ──> leads table + email (Resend)
+   │  quote form                  ── POST  ──> Supabase Edge Function submit-lead ──> leads table + email (Hostinger SMTP)
    └  /admin (supabase-js, magic link) ── select/update ──> all CRM tables            [RLS: admin emails only]
 ```
 
@@ -46,7 +46,7 @@ Browser ── static HTML/CSS + small JS islands ──────────
 - **Motion:** Lenis (smooth scroll) + GSAP ScrollTrigger for section reveals and hero camera scroll-scrub.
 - **Content:** Astro content collections — `learn` (Markdown articles), `work` (case studies). Site-wide facts (contact, prices, areas) in `src/config/site.ts`.
 - **Backend:** Supabase (Postgres + Auth + one Edge Function). No other server.
-- **Hosting/DNS:** `public/CNAME` = `apexdesigns.org.uk`. Hostinger DNS: apex A records → 185.199.108.153 / .109 / .110 / .111; `www` CNAME → `<github-user>.github.io`. MX/email records untouched.
+- **Hosting/DNS:** `public/CNAME` = `apexdesigns.org.uk`. Hostinger DNS: apex A records → 185.199.108.153 / .109 / .110 / .111; `www` CNAME → `<github-user>.github.io`. MX, SPF, DKIM and other email records are left untouched — Hostinger email keeps working.
 
 ## 4. Visual design
 
@@ -113,7 +113,7 @@ Views for the dashboard (`security_invoker = true` so RLS applies): `link_stats`
 
 - Accepts JSON `{name, email, phone?, business?, package?, message, ref?, first_ref?, visitor_id?, hp, t}`.
 - Validates (shared module `src/lib/lead-validation.ts`, copied into the function at deploy): required fields, email format, length limits; rejects if honeypot `hp` filled or submitted < 3s after form render (`t`). CORS restricted to the site origin (+ localhost in dev).
-- Inserts into `leads` with service role; inserts `form_submit` event; sends notification email via Resend (API key in function secrets) to the owner. If email fails, the lead is still saved and the function returns 200 (email failure logged).
+- Inserts into `leads` with service role; inserts `form_submit` event; sends notification email to the owner via Hostinger SMTP (`smtp.hostinger.com:465`, SSL; mailbox credentials in function secrets `SMTP_USER`/`SMTP_PASS`/`NOTIFY_TO`). Port 465 is used because Supabase blocks outbound 25/587. If email fails, the lead is still saved and the function returns 200 (email failure logged).
 - Client shows success state; on network/server error shows a message with WhatsApp/email fallback — the user is never left with a silent failure.
 
 ## 9. Admin dashboard (`/admin/`)
@@ -126,7 +126,7 @@ Views for the dashboard (`security_invoker = true` so RLS applies): `link_stats`
 
 - `src/config/site.ts`: name, founder, email, WhatsApp number, base area, areas served, prices/packages, social links. Email/WhatsApp are clearly marked placeholders — the only intended placeholders.
 - `.env` (build-time, public): `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY`. Lead endpoint derived as `${PUBLIC_SUPABASE_URL}/functions/v1/submit-lead`. Provided to Actions as repo variables. If unset, tracker no-ops and the form falls back to a `mailto:` link.
-- `supabase/migrations/*.sql` for schema + RLS + views; `docs/SETUP.md` covering Supabase project creation, running migrations, deploying the function, setting Resend key, adding your email to `admins`, GitHub Pages + Hostinger DNS steps.
+- `supabase/migrations/*.sql` for schema + RLS + views; `docs/SETUP.md` covering Supabase project creation, running migrations, deploying the function, setting the Hostinger SMTP secrets, adding your email to `admins`, GitHub Pages + Hostinger DNS steps.
 
 ## 11. Assets
 
