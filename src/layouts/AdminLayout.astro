@@ -1,0 +1,50 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource/playfair-display/600.css';
+import '../styles/global.css';
+import Seo from '../components/Seo.astro';
+---
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <Seo title="CRM Dashboard" description="Private Apex Designs lead dashboard." noindex />
+  </head>
+  <body>
+    <main class="container admin-shell"><slot /></main>
+  </body>
+</html>
+<style is:global>
+  .admin-shell { padding-block: 40px 80px; }
+  .admin-shell h1 { font-size: 2rem; display: flex; align-items: center; gap: 12px; }
+  .admin-nav { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; margin: 16px 0 32px; }
+  .admin-nav a { color: var(--mist-dim); text-decoration: none; font-weight: 600; }
+  .admin-nav a.active { color: var(--teal-glow); }
+  .admin-nav .btn { margin-left: auto; padding: 0.6em 1em; }
+  .admin-shell .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .admin-shell .table-wrap { overflow-x: auto; }
+  .admin-shell table { width: 100%; border-collapse: collapse; }
+  .admin-shell th, .admin-shell td { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--line); }
+  .admin-shell td a { color: var(--teal-glow); }
+  .admin-shell input, .admin-shell select, .admin-shell textarea { font: inherit; color: var(--mist); background: rgb(255 255 255 / 0.04); border: 1px solid var(--line); border-radius: 10px; padding: 0.6em 0.8em; width: 100%; }
+  .admin-shell select option { background: var(--ink-2); }
+  .admin-shell td select { width: auto; }
+  .admin-shell select.failed { border-color: #ff8a80; }
+  .admin-shell label { display: grid; gap: 6px; font-weight: 600; }
+  .admin-shell form { display: grid; gap: 14px; margin-bottom: 32px; }
+  .admin-shell .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; }
+  .admin-shell .row > label { flex: 1 1 220px; }
+  .admin-shell .login { max-width: 420px; }
+  .admin-shell .facts { display: grid; grid-template-columns: max-content 1fr; gap: 8px 16px; }
+  .admin-shell dt { color: var(--mist-dim); }
+  .admin-shell dd { margin: 0; }
+  .admin-shell .pre { white-space: pre-wrap; }
+  .admin-shell .timeline { padding-left: 1.2em; display: grid; gap: 10px; }
+  .admin-shell .timeline time { color: var(--mist-dim); font-size: 0.85rem; }
+  .admin-shell .mono { font-family: ui-monospace, monospace; word-break: break-all; }
+  .admin-shell .link { margin-bottom: 16px; }
+  .admin-shell .tile strong { display: block; font: 600 2.4rem/1 var(--font-display); }
+  .admin-shell .error { color: #ff8a80; }
+</style>
