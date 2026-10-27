@@ -37,5 +37,9 @@ const { jsonLd = [], ...seo } = Astro.props;
     <Footer />
     <WhatsAppButton />
     <ConsentBanner />
+    <script>
+      import { initMotion } from '../scripts/motion';
+      initMotion();
+    </script>
   </body>
 </html>
