@@ -23,6 +23,11 @@ export function auditPage(html, relPath) {
 
   if (relPath === 'index.html' && !/data-hero="fallback"/.test(html)) errors.push('home hero must default to data-hero="fallback"');
 
+  if (relPath === 'quote/index.html') {
+    if (!/href="mailto:/i.test(html)) errors.push('quote page needs a mailto: link');
+    if (!/href="https:\/\/wa\.me\//i.test(html)) errors.push('quote page needs a wa.me link');
+  }
+
   return { title, errors };
 }
 

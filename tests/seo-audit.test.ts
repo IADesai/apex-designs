@@ -31,6 +31,12 @@ describe('auditPage', () => {
     expect(auditPage(good(), 'index.html').errors).toContain('home hero must default to data-hero="fallback"');
     expect(auditPage(good('<section data-hero="fallback"></section>'), 'index.html').errors).toEqual([]);
   });
+  it('requires no-JS contact fallbacks on the quote page', () => {
+    const errs = auditPage(good(), 'quote/index.html').errors;
+    expect(errs).toContain('quote page needs a mailto: link');
+    expect(errs).toContain('quote page needs a wa.me link');
+    expect(auditPage(good('<a href="mailto:a@b.uk"></a><a href="https://wa.me/44"></a>'), 'quote/index.html').errors).toEqual([]);
+  });
   it('rejects noindex on public pages', () => {
     expect(auditPage(good('<meta name="robots" content="noindex, nofollow">'), 'services/index.html').errors).toContain('unexpected noindex');
   });
