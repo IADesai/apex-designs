@@ -37,6 +37,10 @@ describe('auditPage', () => {
     expect(errs).toContain('quote page needs a wa.me link');
     expect(auditPage(good('<a href="mailto:a@b.uk"></a><a href="https://wa.me/44"></a>'), 'quote/index.html').errors).toEqual([]);
   });
+  it('skips meta-refresh redirect stubs', () => {
+    const stub = '<!doctype html><title>Redirecting to: /work/</title><meta http-equiv="refresh" content="0;url=/work/"><meta name="robots" content="noindex">';
+    expect(auditPage(stub, 'portfolio/index.html')).toEqual({ title: undefined, errors: [] });
+  });
   it('rejects noindex on public pages', () => {
     expect(auditPage(good('<meta name="robots" content="noindex, nofollow">'), 'services/index.html').errors).toContain('unexpected noindex');
   });

@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+---
+<BaseLayout title="Page Not Found" description="Sorry, that page does not exist. Head back to the Apex Designs home page or get a free website quote." noindex>
+  <PageHero eyebrow="404" lead="That page has wandered off the trail. Let's get you back to base camp.">
+    Page not found
+    <div slot="after" class="ctas">
+      <a class="btn btn-primary" href="/">Back home</a>
+      <a class="btn btn-ghost" href="/quote/">Get a quote</a>
+    </div>
+  </PageHero>
+</BaseLayout>
+<style>.ctas { display: flex; gap: 12px; flex-wrap: wrap; margin: 28px 0 80px; }</style>

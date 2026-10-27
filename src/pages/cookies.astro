@@ -1,0 +1,20 @@
+---
+import ProseLayout from '../layouts/ProseLayout.astro';
+---
+<ProseLayout title="Cookie Policy" heading="Cookies and storage" eyebrow="Legal" description="Exactly what Apex Designs stores in your browser, why, and how to change your choice. No advertising or third-party cookies.">
+  <p><em>Last updated: 27 October 2026</em></p>
+  <p>This site does not use advertising or third-party cookies. It uses your browser's local and session storage as follows.</p>
+  <table>
+    <thead><tr><th>Name</th><th>Type</th><th>Purpose</th><th>When</th><th>Lasts</th></tr></thead>
+    <tbody>
+      <tr><td><code>apex-consent</code></td><td>Local storage</td><td>Remembers your cookie choice</td><td>Always (strictly necessary)</td><td>Until you clear it</td></tr>
+      <tr><td><code>apex-vid</code></td><td>Local storage</td><td>Random visitor ID for analytics</td><td>Only if you accept</td><td>Until you clear it or withdraw consent</td></tr>
+      <tr><td><code>apex-first-ref</code></td><td>Local storage</td><td>Which tracked link first brought you here</td><td>Only if you accept</td><td>Until you clear it or withdraw consent</td></tr>
+      <tr><td><code>apex-sid</code></td><td>Session storage</td><td>Groups page views into one visit</td><td>Only if you accept</td><td>Until you close the tab</td></tr>
+      <tr><td><code>apex-ref</code></td><td>Session storage</td><td>Remembers the tracked link for your enquiry</td><td>Only if you accept</td><td>Until you close the tab</td></tr>
+    </tbody>
+  </table>
+  <p>If you arrive through a tracked link and have not accepted analytics, the site records one anonymous visit for that link and stores nothing on your device.</p>
+  <h2>Changing your choice</h2>
+  <p>Use <strong>Cookie settings</strong> in the footer at any time. Choosing "No thanks" deletes the analytics items above.</p>
+</ProseLayout>

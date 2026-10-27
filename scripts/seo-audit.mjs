@@ -1,6 +1,7 @@
 export const PLACEHOLDER_MARKERS = ['447000000000'];
 
 export function auditPage(html, relPath) {
+  if (/<meta\s+http-equiv="refresh"/i.test(html)) return { title: undefined, errors: [] };
   const errors = [];
   const isAdmin = relPath.startsWith('admin/');
   const is404 = relPath === '404.html' || relPath === '404/index.html';

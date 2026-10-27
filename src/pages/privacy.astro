@@ -1,0 +1,33 @@
+---
+import ProseLayout from '../layouts/ProseLayout.astro';
+import { site } from '../config/site';
+---
+<ProseLayout title="Privacy Policy" heading="Privacy policy" eyebrow="Legal" description="How Apex Designs collects, uses and protects your personal data when you use this website or contact me about a project.">
+  <p><em>Last updated: 27 October 2026</em></p>
+  <h2>Who I am</h2>
+  <p>Apex Designs is a web design studio run by {site.founder} in Romford, Greater London. I am the controller of the personal data described here. Contact: <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+  <h2>What I collect</h2>
+  <ul>
+    <li><strong>Quote requests:</strong> your name, email, and optionally phone, business name, package and message, plus which tracked link (if any) brought you to the site.</li>
+    <li><strong>Analytics, only if you accept:</strong> a random visitor ID, the pages you view, buttons you click, how far you scroll, and your browser type. No ads and no third-party trackers.</li>
+    <li><strong>Without your consent:</strong> if you arrive through one of my tracked links, I record one anonymous visit for that link, with no ID and nothing stored on your device.</li>
+    <li><strong>Messages you send me</strong> by email or WhatsApp.</li>
+  </ul>
+  <h2>Why, and the legal basis</h2>
+  <ul>
+    <li>Replying to your enquiry and preparing a quote: steps you ask for before entering a contract, and my legitimate interest in responding to business enquiries.</li>
+    <li>Analytics: your consent, which you can withdraw at any time via "Cookie settings" in the footer.</li>
+    <li>Anonymous link counts: my legitimate interest in knowing which of my posts and groups bring visitors.</li>
+  </ul>
+  <h2>Who processes it for me</h2>
+  <ul>
+    <li><strong>Supabase</strong> stores enquiries and analytics in a database hosted in the UK/EU region.</li>
+    <li><strong>Hostinger</strong> provides my email, so enquiry notifications pass through their mail servers.</li>
+    <li><strong>GitHub Pages</strong> hosts the website and may log IP addresses for security.</li>
+  </ul>
+  <p>I do not sell your data or share it with anyone else.</p>
+  <h2>How long I keep it</h2>
+  <p>Enquiries: up to 24 months after our last contact. Analytics events: up to 13 months. These limits are enforced by an automatic daily clean-up.</p>
+  <h2>Your rights</h2>
+  <p>You can ask to access, correct or delete your data, object to processing, or withdraw consent. Email <a href={`mailto:${site.email}`}>{site.email}</a>. You can also complain to the Information Commissioner's Office at <a href="https://ico.org.uk/">ico.org.uk</a>.</p>
+</ProseLayout>

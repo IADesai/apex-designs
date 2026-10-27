@@ -1,0 +1,19 @@
+---
+import ProseLayout from '../layouts/ProseLayout.astro';
+import { site } from '../config/site';
+---
+<ProseLayout title="Terms and Conditions" heading="Terms and conditions" eyebrow="Legal" description="Terms for using the Apex Designs website. Project terms are agreed separately in writing before any work starts.">
+  <p><em>Last updated: 27 October 2026</em></p>
+  <h2>Using this website</h2>
+  <p>This website is run by Apex Designs, Romford. By using it you agree to these terms. The content is for general information only and may change without notice.</p>
+  <h2>Prices and quotes</h2>
+  <p>Prices shown are starting points. A quote is only binding once we have agreed the scope, price and timeline in writing. Project-specific terms, including payment and ownership, are set out in that agreement.</p>
+  <h2>Intellectual property</h2>
+  <p>The design, text and images on this site belong to Apex Designs or are used with permission. Portfolio work is shown with the agreement of the clients concerned.</p>
+  <h2>Liability</h2>
+  <p>I take care to keep this site accurate and available, but I cannot guarantee it will always be error-free or uninterrupted. Nothing in these terms limits liability that cannot be limited by law.</p>
+  <h2>Law</h2>
+  <p>These terms are governed by the laws of England and Wales.</p>
+  <h2>Contact</h2>
+  <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+</ProseLayout>
