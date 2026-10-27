@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import WorkCard from '../../components/WorkCard.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { breadcrumbJsonLd } from '../../lib/seo';
+const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+---
+<BaseLayout
+  title="Web Design Portfolio"
+  description="Websites built by Apex Designs for restaurants, venues, sales funnels and professional services across East London and beyond."
+  jsonLd={[breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Work', path: '/work/' }])]}
+>
+  <PageHero eyebrow="Work" lead="Real sites for real local businesses, each one designed around its customers.">Web design portfolio</PageHero>
+  <section class="container tight">
+    <div class="grid-2" data-reveal-stagger>{work.map((entry) => <WorkCard entry={entry} />)}</div>
+  </section>
+  <CtaBand heading="Want yours here next?" />
+</BaseLayout>
+<style>.tight { padding-bottom: 40px; }</style>

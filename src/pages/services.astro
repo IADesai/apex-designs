@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import PackageCard from '../components/PackageCard.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { packages } from '../data/packages';
+import { serviceFaqs } from '../data/faqs';
+import { faqJsonLd, breadcrumbJsonLd } from '../lib/seo';
+const extras = [
+  { title: 'Website revamps', text: 'Already have a WordPress, Wix or Squarespace site that is not working? I rebuild it properly and protect your Google rankings with redirects.' },
+  { title: 'Google Business Profile', text: 'Set up and optimised so you show up on Google Maps when local customers search.' },
+  { title: 'Custom systems', text: 'Booking flows, lead routing, dashboards and integrations built specifically for how your business works.' },
+];
+---
+<BaseLayout
+  title="Website Packages & Prices"
+  description="Website packages from £300 for Romford, East London and Essex businesses. Standard, Premium (£500 + £15/month) and Custom builds, with clear prices up front."
+  jsonLd={[faqJsonLd(serviceFaqs), breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }])]}
+>
+  <PageHero eyebrow="Services" lead="Custom websites for small businesses, with prices you can see before you pick up the phone.">
+    Website packages &amp; prices for Romford businesses
+  </PageHero>
+
+  <section class="container">
+    <div class="grid-3" data-reveal-stagger>{packages.map((p) => <PackageCard pkg={p} />)}</div>
+    <p class="muted note">Not sure which fits? <a href="/quote/?package=unsure">Ask me</a> and I will recommend one honestly, even if it is the cheapest.</p>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Also available</span>
+      <h2>More than a homepage</h2>
+      <div class="grid-3" data-reveal-stagger>
+        {extras.map((e) => <article class="card" data-spotlight><h3>{e.title}</h3><p class="muted">{e.text}</p></article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container narrow">
+      <span class="eyebrow">FAQ</span>
+      <h2>Questions people ask</h2>
+      <Faq items={serviceFaqs} />
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+<style>
+  .note { margin-top: 24px; }
+  .note a { color: var(--teal-glow); }
+  .narrow { max-width: 860px; }
+</style>

@@ -1,0 +1,41 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { Picture } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { breadcrumbJsonLd } from '../../lib/seo';
+
+export async function getStaticPaths() {
+  const work = await getCollection('work');
+  return work.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+interface Props { entry: CollectionEntry<'work'> }
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+<BaseLayout
+  title={`${d.title}: ${d.sector} Website`}
+  description={d.summary}
+  jsonLd={[breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Work', path: '/work/' }, { name: d.title, path: `/work/${entry.id}/` }])]}
+>
+  <PageHero eyebrow={d.location ? `${d.sector} · ${d.location}` : d.sector} lead={d.summary}>{d.title}</PageHero>
+  <section class="container">
+    <div class="shot card" data-reveal>
+      <Picture src={d.image} formats={['avif', 'webp']} widths={[800, 1200, 1800]} sizes="(max-width: 1200px) 100vw, 1200px" alt={`${d.title} website on laptop and phone`} loading="eager" />
+    </div>
+    <ul class="services">{d.services.map((s) => <li>{s}</li>)}</ul>
+  </section>
+  <section class="container section">
+    <div class="prose"><Content /></div>
+    <p><a class="btn btn-ghost" href="/work/">← All work</a></p>
+  </section>
+  <CtaBand />
+</BaseLayout>
+<style>
+  .shot { padding: clamp(12px, 3vw, 40px); background: #fffff2; }
+  .services { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .services li { border: 1px solid var(--line); border-radius: 999px; padding: 0.45em 1em; font-size: 0.9rem; color: var(--mist-dim); }
+  .prose :global(blockquote) { margin: 2em 0; padding-left: 1.2em; border-left: 3px solid var(--teal-glow); font: italic 500 1.25rem/1.5 var(--font-display); }
+</style>
