@@ -1,0 +1,23 @@
+---
+import { site } from '../config/site';
+import { whatsappUrl, DEFAULT_WA_TEXT } from '../lib/whatsapp';
+interface Props { heading?: string; text?: string }
+const { heading = 'Ready for a website that clicks?', text = 'Tell me about your business. You get a clear plan and price, no jargon, no pressure.' } = Astro.props;
+---
+<section class="section">
+  <div class="container">
+    <div class="band card" data-spotlight data-reveal>
+      <h2>{heading}</h2>
+      <p class="lead">{text}</p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="/quote/" data-track="band-quote" data-magnetic>Get a free quote</a>
+        <a class="btn btn-ghost" href={whatsappUrl(site.whatsapp, DEFAULT_WA_TEXT)} data-wa target="_blank" rel="noopener">Message on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .band { text-align: center; padding: clamp(40px, 7vw, 88px) clamp(20px, 5vw, 64px); background: radial-gradient(80% 120% at 50% 0%, rgb(62 125 110 / 0.35), transparent 70%), rgb(255 255 255 / 0.02); }
+  .band .lead { margin-inline: auto; }
+  .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
+</style>

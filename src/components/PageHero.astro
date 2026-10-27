@@ -1,0 +1,24 @@
+---
+interface Props { eyebrow?: string; lead?: string }
+const { eyebrow, lead } = Astro.props;
+---
+<section class="page-hero">
+  <div class="mesh" aria-hidden="true"></div>
+  <div class="container inner">
+    {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+    <h1><slot /></h1>
+    {lead && <p class="lead">{lead}</p>}
+    <slot name="after" />
+  </div>
+</section>
+<style>
+  .page-hero { position: relative; padding: clamp(150px, 20vw, 220px) 0 clamp(56px, 8vw, 96px); overflow: hidden; }
+  .inner { position: relative; }
+  .mesh { position: absolute; inset: -20% -10% 0; background:
+      radial-gradient(40% 50% at 20% 30%, rgb(62 125 110 / 0.35), transparent 70%),
+      radial-gradient(30% 40% at 80% 20%, rgb(95 211 181 / 0.18), transparent 70%),
+      radial-gradient(50% 50% at 60% 90%, rgb(43 48 48 / 0.8), transparent 70%);
+    filter: blur(40px); animation: drift 18s ease-in-out infinite alternate; }
+  @keyframes drift { to { transform: translate3d(4%, 3%, 0) scale(1.08); } }
+  h1 { font-size: clamp(2.4rem, 6vw, 4.6rem); max-width: 18ch; }
+</style>

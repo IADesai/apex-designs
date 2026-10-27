@@ -1,0 +1,16 @@
+<div id="consent-banner" class="consent card" role="region" aria-label="Cookie choices" hidden>
+  <p><strong>Can I measure how you use this site?</strong> With your OK I store an anonymous ID so I can see which pages and links help people find me. No ads, no third-party trackers. <a href="/cookies/">Details</a></p>
+  <div class="actions">
+    <button type="button" class="btn btn-ghost" data-consent="denied">No thanks</button>
+    <button type="button" class="btn btn-ghost" data-consent="granted">Accept analytics</button>
+  </div>
+</div>
+<style>
+  .consent { position: fixed; left: 20px; bottom: 20px; z-index: 70; max-width: min(440px, calc(100% - 100px)); padding: 20px; background: rgb(17 24 22 / 0.92); font-size: 0.92rem; }
+  .consent[hidden] { display: none; }
+  .consent p { margin-bottom: 14px; }
+  .consent a { color: var(--teal-glow); }
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .actions .btn { padding: 0.7em 1.1em; font-size: 0.9rem; }
+  @media (max-width: 560px) { .consent { left: 12px; right: 12px; bottom: 88px; max-width: none; } }
+</style>

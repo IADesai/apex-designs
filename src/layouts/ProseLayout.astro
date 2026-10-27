@@ -1,0 +1,24 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+interface Props {
+  title?: string;
+  description: string;
+  heading: string;
+  eyebrow?: string;
+  lead?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown>[];
+  type?: 'website' | 'article';
+}
+const { heading, eyebrow, lead, ...rest } = Astro.props;
+---
+<BaseLayout {...rest}>
+  <PageHero eyebrow={eyebrow} lead={lead}>{heading}</PageHero>
+  <section class="container prose-wrap">
+    <article class="prose"><slot /></article>
+  </section>
+</BaseLayout>
+<style>
+  .prose-wrap { padding-bottom: clamp(72px, 10vw, 140px); }
+</style>

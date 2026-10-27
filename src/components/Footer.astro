@@ -1,0 +1,63 @@
+---
+import { site } from '../config/site';
+import { whatsappUrl, DEFAULT_WA_TEXT } from '../lib/whatsapp';
+const year = new Date().getFullYear();
+const areas = [
+  { href: '/web-design-romford/', label: 'Web design Romford' },
+  { href: '/web-design-east-london/', label: 'Web design East London' },
+  { href: '/web-design-essex/', label: 'Web design Essex' },
+  { href: '/remote-web-design-uk/', label: 'Remote web design UK' },
+];
+---
+<footer class="site-footer">
+  <div class="container cols">
+    <div>
+      <a class="brand" href="/"><img src="/favicon.svg" width="40" height="40" alt="" /><span>Apex Designs</span></a>
+      <p class="muted">Websites that click. A one-person web studio based in Romford, building for businesses across East London, Essex and the UK.</p>
+    </div>
+    <nav aria-label="Areas">
+      <p class="fh">Areas</p>
+      <ul>{areas.map((a) => <li><a href={a.href}>{a.label}</a></li>)}</ul>
+    </nav>
+    <nav aria-label="Site">
+      <p class="fh">Explore</p>
+      <ul>
+        <li><a href="/services/">Packages &amp; prices</a></li>
+        <li><a href="/work/">Work</a></li>
+        <li><a href="/learn/">Learn</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/quote/">Get a quote</a></li>
+      </ul>
+    </nav>
+    <div>
+      <p class="fh">Talk to Ibrahim</p>
+      <ul>
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        <li><a href={whatsappUrl(site.whatsapp, DEFAULT_WA_TEXT)} data-wa rel="noopener" target="_blank">WhatsApp</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container legal">
+    <span>© {year} Apex Designs · Romford, Greater London</span>
+    <span class="links">
+      <a href="/privacy/">Privacy</a><a href="/cookies/">Cookies</a><a href="/terms/">Terms</a>
+      <button type="button" class="linklike" data-consent-open>Cookie settings</button>
+    </span>
+  </div>
+</footer>
+
+<style>
+  .site-footer { border-top: 1px solid var(--line); padding-block: 72px 32px; background: linear-gradient(180deg, transparent, rgb(62 125 110 / 0.06)); }
+  .cols { display: grid; gap: 40px; grid-template-columns: 2fr repeat(3, 1fr); }
+  @media (max-width: 900px) { .cols { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .cols { grid-template-columns: 1fr; } }
+  .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; font: 600 1.3rem/1 var(--font-display); margin-bottom: 1rem; }
+  .fh { font: 600 0.78rem/1 var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal-glow); margin-bottom: 1rem; }
+  ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.55rem; }
+  ul a { color: var(--mist-dim); text-decoration: none; }
+  ul a:hover { color: var(--mist); }
+  .legal { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--mist-dim); font-size: 0.88rem; }
+  .links { display: flex; flex-wrap: wrap; gap: 18px; }
+  .links a { color: inherit; }
+  .linklike { background: none; border: 0; padding: 0; color: inherit; font: inherit; text-decoration: underline; cursor: pointer; }
+</style>
