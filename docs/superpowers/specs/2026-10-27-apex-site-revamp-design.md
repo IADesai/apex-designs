@@ -102,7 +102,7 @@ Views for the dashboard (`security_invoker = true` so RLS applies): `link_stats`
 
 ## 7. Tracking behaviour (`src/lib/tracker.ts`)
 
-- On load: parse `ref` and `utm_*` from the URL; persist `ref` in `sessionStorage` (session-scoped, functional) so the quote form can submit it.
+- On load: parse `ref` and `utm_*` from the URL. The ref is kept in memory for the current page; it is written to `sessionStorage` only after consent (PECR: attribution storage is not strictly necessary).
 - **No consent (default):** send one `ref_landing` event (no visitor/session ID) only when a `ref` is present. Nothing else.
 - **Consent granted** (banner "Accept analytics"): create/read `visitor_id` + first-touch data in `localStorage`, `session_id` in `sessionStorage`; insert visitor on first creation; send `page_view`, `cta_click` (elements with `data-track`), `whatsapp_click`, `scroll_depth` (25/50/75/100), `form_start`, `form_submit`.
 - Events are batched and sent with `fetch(..., {keepalive:true})` to the Supabase REST endpoint; failures are swallowed (tracking must never break the page) but logged to console in dev.
@@ -111,8 +111,8 @@ Views for the dashboard (`security_invoker = true` so RLS applies): `link_stats`
 
 ## 8. Lead submission (`supabase/functions/submit-lead`)
 
-- Accepts JSON `{name, email, phone?, business?, package?, message, ref?, first_ref?, visitor_id?, hp, t}`.
-- Validates (shared module `src/lib/lead-validation.ts`, copied into the function at deploy): required fields, email format, length limits; rejects if honeypot `hp` filled or submitted < 3s after form render (`t`). CORS restricted to the site origin (+ localhost in dev).
+- Accepts JSON `{name, email, phone?, business?, package?, message, ref?, first_ref?, visitor_id?, hp, elapsed}`.
+- Validates (shared dependency-free module `supabase/functions/_shared/lead.ts`, imported by both the site and the function): required fields, email format, length limits; rejects if honeypot `hp` is filled or `elapsed` (ms on the form, measured in the browser, so client clock skew cannot drop real leads) is under 3s. CORS restricted to the site origin (+ localhost in dev).
 - Inserts into `leads` with service role; inserts `form_submit` event; sends notification email to the owner via Hostinger SMTP (`smtp.hostinger.com:465`, SSL; mailbox credentials in function secrets `SMTP_USER`/`SMTP_PASS`/`NOTIFY_TO`). Port 465 is used because Supabase blocks outbound 25/587. If email fails, the lead is still saved and the function returns 200 (email failure logged).
 - Client shows success state; on network/server error shows a message with WhatsApp/email fallback — the user is never left with a silent failure.
 
