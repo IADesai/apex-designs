@@ -6,7 +6,7 @@ location: Romford
 summary: A Romford barbershop site where customers book a cut directly with their chosen barber, and each barber controls their own availability.
 image: ../../assets/work/top-looks.png
 order: 4
-services: [Online booking, Per-barber calendars, Online payments, Custom website]
+services: [Online booking, Per-barber calendars, Custom website]
 ---
 
 ## The brief
