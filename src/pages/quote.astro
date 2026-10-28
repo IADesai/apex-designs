@@ -57,18 +57,18 @@ import { breadcrumbJsonLd } from '../lib/seo';
   .row { display: grid; gap: 18px; grid-template-columns: 1fr 1fr; }
   @media (max-width: 600px) { .row { grid-template-columns: 1fr; } }
   label { display: grid; gap: 8px; font-weight: 600; font-size: 0.95rem; }
-  .opt { font-weight: 400; color: var(--mist-dim); }
-  input, select, textarea { font: inherit; font-weight: 400; color: var(--mist); background: rgb(255 255 255 / 0.04); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 0.8em 1em; width: 100%; }
-  select option { background: var(--ink-2); }
-  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--teal-glow); box-shadow: 0 0 0 3px rgb(95 211 181 / 0.2); }
-  [aria-invalid='true'] { border-color: #ff8a80; }
-  .err { color: #ff8a80; font-weight: 500; font-size: 0.85rem; min-height: 1em; }
+  .opt { font-weight: 400; color: var(--text-dim); }
+  input, select, textarea { font: inherit; font-weight: 400; color: var(--text); background: #fff; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 0.8em 1em; width: 100%; }
+  
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgb(62 125 110 / 0.2); }
+  [aria-invalid='true'] { border-color: #b3261e; }
+  .err { color: #b3261e; font-weight: 500; font-size: 0.85rem; min-height: 1em; }
   .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .status { min-height: 1.4em; margin: 0; font-weight: 600; }
-  .form[data-state='sent'] .status { color: var(--teal-glow); }
-  .form[data-state='error'] .status { color: #ff8a80; }
+  .form[data-state='sent'] .status { color: var(--accent); }
+  .form[data-state='error'] .status { color: #b3261e; }
   .small { font-size: 0.85rem; margin: 0; }
-  .small a { color: var(--teal-glow); }
+  .small a { color: var(--accent); }
   .side { display: grid; gap: 12px; }
   .h3 { font-size: 1.4rem; margin: 0; }
 </style>

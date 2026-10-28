@@ -1,8 +1,35 @@
 import * as THREE from 'three';
-import { heightAt, colorForHeight, jitter, TERRAIN } from './terrain';
+import { LOGO_PEAKS, BRAND_COLORS, snowCapFor } from './peaks';
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
-const easeInOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2);
+const easeOutBack = (t: number) => { const c = 1.4; const u = t - 1; return 1 + (c + 1) * u * u * u + c * u * u; };
+
+/** A soft round shadow under the mountains, drawn once to a canvas. */
+function contactShadow(): THREE.Mesh {
+  const c = document.createElement('canvas');
+  c.width = c.height = 256;
+  const g = c.getContext('2d')!;
+  const grad = g.createRadialGradient(128, 128, 0, 128, 128, 128);
+  grad.addColorStop(0, 'rgba(83, 74, 69, 0.35)');
+  grad.addColorStop(1, 'rgba(83, 74, 69, 0)');
+  g.fillStyle = grad;
+  g.fillRect(0, 0, 256, 256);
+  const mesh = new THREE.Mesh(new THREE.PlaneGeometry(16, 9), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthWrite: false }));
+  mesh.rotation.x = -Math.PI / 2;
+  mesh.position.y = 0.01;
+  return mesh;
+}
+
+function pyramid(radius: number, height: number, segments: number, color: number): THREE.Group {
+  const geo = new THREE.ConeGeometry(radius, height, segments, 1);
+  geo.translate(0, height / 2, 0); // base on y = 0
+  const solid = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ color, flatShading: true }));
+  // White facet lines, like the separations in the logo.
+  const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo), new THREE.LineBasicMaterial({ color: BRAND_COLORS.snow, transparent: true, opacity: 0.85 }));
+  const group = new THREE.Group();
+  group.add(solid, edges);
+  return group;
+}
 
 export function initHero(root: HTMLElement): (() => void) | null {
   const canvas = root.querySelector<HTMLCanvasElement>('canvas[data-hero-canvas]');
@@ -18,84 +45,50 @@ export function initHero(root: HTMLElement): (() => void) | null {
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x0b0f0e, 0.022);
-  const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 200);
+  const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
 
-  // Terrain: displaced plane, made non-indexed so each triangle gets one flat colour.
-  const base = new THREE.PlaneGeometry(TERRAIN.size, TERRAIN.size, TERRAIN.segments, TERRAIN.segments);
-  base.rotateX(-Math.PI / 2);
-  const bp = base.attributes.position;
-  let maxH = 0;
-  for (let i = 0; i < bp.count; i++) {
-    const [jx, jz] = jitter(bp.getX(i), bp.getZ(i));
-    const x = bp.getX(i) + jx, z = bp.getZ(i) + jz;
-    const h = heightAt(x, z);
-    bp.setXYZ(i, x, h, z);
-    if (h > maxH) maxH = h;
+  const mountains = new THREE.Group();
+  const risers: { node: THREE.Object3D; delay: number }[] = [];
+  for (const p of LOGO_PEAKS) {
+    const peak = pyramid(p.radius, p.height, p.segments, p.color);
+    if (p.id === 'main') {
+      const cap = snowCapFor(p, 0.24);
+      const snow = pyramid(cap.radius * 1.02, cap.height * 1.02, p.segments, cap.color);
+      snow.position.y = cap.baseY - cap.height * 0.02;
+      peak.add(snow);
+    }
+    peak.position.set(p.x, 0, p.z);
+    peak.rotation.y = p.rotation;
+    peak.scale.y = 0.001;
+    mountains.add(peak);
+    risers.push({ node: peak, delay: p.delay });
   }
-  const geo = base.toNonIndexed();
-  base.dispose();
-  geo.computeVertexNormals();
-  const pos = geo.attributes.position;
-  const colors = new Float32Array(pos.count * 3);
-  for (let i = 0; i < pos.count; i += 3) {
-    const avg = (pos.getY(i) + pos.getY(i + 1) + pos.getY(i + 2)) / 3;
-    const [r, g, b] = colorForHeight(avg, maxH);
-    for (let k = 0; k < 3; k++) colors.set([r, g, b], (i + k) * 3);
-  }
-  geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  mountains.add(contactShadow());
+  scene.add(mountains);
 
-  const terrainMat = new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: 0.9, metalness: 0.05 });
-  const wireGeo = new THREE.WireframeGeometry(geo);
-  const wireMat = new THREE.LineBasicMaterial({ color: 0x5fd3b5, transparent: true, opacity: 0.07 });
-  const group = new THREE.Group();
-  group.add(new THREE.Mesh(geo, terrainMat), new THREE.LineSegments(wireGeo, wireMat));
-  scene.add(group);
-
-  // Drifting particles (snow / dust) for depth.
-  const pCount = 600;
-  const pPos = new Float32Array(pCount * 3);
-  for (let i = 0; i < pCount; i++) {
-    pPos[i * 3] = (Math.random() - 0.5) * 40;
-    pPos[i * 3 + 1] = Math.random() * 18;
-    pPos[i * 3 + 2] = (Math.random() - 0.5) * 40;
-  }
-  const pGeo = new THREE.BufferGeometry();
-  pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-  const pMat = new THREE.PointsMaterial({ color: 0xcfe9e1, size: 0.06, transparent: true, opacity: 0.7, depthWrite: false });
-  const particles = new THREE.Points(pGeo, pMat);
-  scene.add(particles);
-
-  scene.add(new THREE.HemisphereLight(0xcfe9e1, 0x0b0f0e, 0.7));
-  const sun = new THREE.DirectionalLight(0xffffff, 2.4);
-  sun.position.set(-10, 16, 8);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0xd8d2bd, 1.15));
+  const sun = new THREE.DirectionalLight(0xffffff, 1.5);
+  sun.position.set(-6, 10, 8);
   scene.add(sun);
-  const rim = new THREE.DirectionalLight(0x5fd3b5, 1.4);
-  rim.position.set(12, 6, -12);
-  scene.add(rim);
 
-  // Camera climbs from the valley to just above the apex as the hero scrolls away.
-  const camStart = new THREE.Vector3(0, 4.2, 24);
-  const camEnd = new THREE.Vector3(0, maxH + 3.5, 7);
-  const lookStart = new THREE.Vector3(0, 4, 0);
-  const lookEnd = new THREE.Vector3(0, maxH - 0.5, 0);
-  const look = new THREE.Vector3();
+  const lookAt = new THREE.Vector3(0, 2.7, 0);
+  const box = canvas.parentElement ?? root;
+  const resize = () => {
+    const w = box.clientWidth, h = box.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / Math.max(1, h);
+    // Pull back on narrow screens so the whole mark stays in frame.
+    camera.position.set(0, 4.4, w < 700 ? 19 : 15);
+    camera.lookAt(lookAt);
+    camera.updateProjectionMatrix();
+  };
+  const ro = new ResizeObserver(resize);
+  ro.observe(box);
+  resize();
 
   const pointer = { x: 0, y: 0 };
   const eased = { x: 0, y: 0, p: 0 };
   let progress = 0;
-
-  const resize = () => {
-    const w = root.clientWidth, h = root.clientHeight;
-    renderer.setSize(w, h, false);
-    camera.aspect = w / Math.max(1, h);
-    camera.fov = w < 700 ? 55 : 42;
-    camera.updateProjectionMatrix();
-  };
-  const ro = new ResizeObserver(resize);
-  ro.observe(root);
-  resize();
-
   const onPointer = (e: PointerEvent) => {
     pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
     pointer.y = (e.clientY / window.innerHeight) * 2 - 1;
@@ -117,26 +110,18 @@ export function initHero(root: HTMLElement): (() => void) | null {
     raf = 0;
     if (!visible || document.hidden) return;
     const t = (performance.now() - t0) / 1000;
-    eased.x += (pointer.x - eased.x) * 0.05;
-    eased.y += (pointer.y - eased.y) * 0.05;
+    eased.x += (pointer.x - eased.x) * 0.06;
+    eased.y += (pointer.y - eased.y) * 0.06;
     eased.p += (progress - eased.p) * 0.08;
-    const k = easeInOut(eased.p);
 
-    camera.position.lerpVectors(camStart, camEnd, k);
-    camera.position.x += eased.x * 1.6;
-    camera.position.y += -eased.y * 0.8;
-    look.lerpVectors(lookStart, lookEnd, k);
-    camera.lookAt(look);
-
-    group.rotation.y = Math.sin(t * 0.05) * 0.08 + eased.x * 0.05;
-    particles.rotation.y = t * 0.01;
-    const pp = pGeo.attributes.position as THREE.BufferAttribute;
-    for (let i = 0; i < pCount; i++) {
-      let y = pp.getY(i) - 0.004;
-      if (y < 0) y = 18;
-      pp.setY(i, y);
+    for (const r of risers) {
+      const k = clamp01((t - r.delay) / 1.1);
+      r.node.scale.y = Math.max(0.001, easeOutBack(k));
     }
-    pp.needsUpdate = true;
+
+    mountains.rotation.y = Math.sin(t * 0.25) * 0.12 + eased.x * 0.35 + eased.p * 1.2;
+    mountains.rotation.x = eased.y * 0.06;
+    mountains.position.y = -eased.p * 1.5;
 
     renderer.render(scene, camera);
     if (first) { first = false; root.dataset.hero = 'live'; }
@@ -159,8 +144,12 @@ export function initHero(root: HTMLElement): (() => void) | null {
     window.removeEventListener('pointermove', onPointer);
     window.removeEventListener('scroll', onScroll);
     document.removeEventListener('visibilitychange', onVisibility);
-    geo.dispose(); wireGeo.dispose(); pGeo.dispose();
-    terrainMat.dispose(); wireMat.dispose(); pMat.dispose();
+    scene.traverse((o) => {
+      const m = o as THREE.Mesh;
+      m.geometry?.dispose();
+      const mat = m.material as THREE.Material | THREE.Material[] | undefined;
+      (Array.isArray(mat) ? mat : mat ? [mat] : []).forEach((x) => x.dispose());
+    });
     renderer.dispose();
   };
 

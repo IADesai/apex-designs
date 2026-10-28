@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo/apex-logo.png';
 import { site } from '../config/site';
 import { whatsappUrl, DEFAULT_WA_TEXT } from '../lib/whatsapp';
 const year = new Date().getFullYear();
@@ -11,9 +13,9 @@ const areas = [
 ---
 <footer class="site-footer">
   <div class="container cols">
-    <div>
-      <a class="brand" href="/"><img src="/favicon.svg" width="40" height="40" alt="" /><span>Apex Designs</span></a>
-      <p class="muted">Websites that click. A one-person web studio based in Romford, building for businesses across East London, Essex and the UK.</p>
+    <div class="brandcol">
+      <a href="/" aria-label="Apex Designs home"><Image src={logo} alt="Apex Designs" width={200} height={200} densities={[1, 2]} /></a>
+      <p class="muted">Websites that click. A one-person web studio in Romford, building for businesses across East London, Essex and the UK.</p>
     </div>
     <nav aria-label="Areas">
       <p class="fh">Areas</p>
@@ -23,7 +25,7 @@ const areas = [
       <p class="fh">Explore</p>
       <ul>
         <li><a href="/services/">Packages &amp; prices</a></li>
-        <li><a href="/work/">Work</a></li>
+        <li><a href="/work/">Portfolio</a></li>
         <li><a href="/learn/">Learn</a></li>
         <li><a href="/about/">About</a></li>
         <li><a href="/quote/">Get a quote</a></li>
@@ -37,27 +39,31 @@ const areas = [
       </ul>
     </div>
   </div>
-  <div class="container legal">
-    <span>© {year} Apex Designs · Romford, Greater London</span>
-    <span class="links">
-      <a href="/privacy/">Privacy</a><a href="/cookies/">Cookies</a><a href="/terms/">Terms</a>
-      <button type="button" class="linklike" data-consent-open>Cookie settings</button>
-    </span>
+  <div class="legal">
+    <div class="container legal-inner">
+      <span>Copyright © {year} Apex Designs · Romford, Greater London</span>
+      <span class="links">
+        <a href="/cookies/">Cookie Policy (UK)</a><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms and Conditions</a>
+        <button type="button" class="linklike" data-consent-open>Cookie settings</button>
+      </span>
+    </div>
   </div>
 </footer>
 
 <style>
-  .site-footer { border-top: 1px solid var(--line); padding-block: 72px 32px; background: linear-gradient(180deg, transparent, rgb(62 125 110 / 0.06)); }
-  .cols { display: grid; gap: 40px; grid-template-columns: 2fr repeat(3, 1fr); }
+  .site-footer { background: #fff; border-top: 1px solid var(--line); padding-top: 64px; }
+  .cols { display: grid; gap: 40px; grid-template-columns: 1.6fr repeat(3, 1fr); align-items: start; }
   @media (max-width: 900px) { .cols { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 560px) { .cols { grid-template-columns: 1fr; } }
-  .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; font: 600 1.3rem/1 var(--font-display); margin-bottom: 1rem; }
-  .fh { font: 600 0.78rem/1 var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal-glow); margin-bottom: 1rem; }
+  .brandcol :global(img) { width: 200px; height: 200px; margin: -16px 0 8px -12px; }
+  .brandcol p { max-width: 34ch; }
+  .fh { font: 600 0.78rem/1 var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
   ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.55rem; }
-  ul a { color: var(--mist-dim); text-decoration: none; }
-  ul a:hover { color: var(--mist); }
-  .legal { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--mist-dim); font-size: 0.88rem; }
-  .links { display: flex; flex-wrap: wrap; gap: 18px; }
+  ul a { color: var(--text); text-decoration: none; }
+  ul a:hover { color: var(--teal); }
+  .legal { margin-top: 48px; border-top: 1px solid var(--line); padding-block: 22px; font-size: 0.86rem; color: var(--text-dim); }
+  .legal-inner { display: flex; flex-wrap: wrap; gap: 10px 24px; justify-content: space-between; }
+  .links { display: flex; flex-wrap: wrap; gap: 16px; }
   .links a { color: inherit; }
   .linklike { background: none; border: 0; padding: 0; color: inherit; font: inherit; text-decoration: underline; cursor: pointer; }
 </style>

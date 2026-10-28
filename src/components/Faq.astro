@@ -16,7 +16,7 @@ const { items } = Astro.props;
   details { padding: 0; }
   summary { cursor: pointer; list-style: none; padding: 22px 56px 22px 24px; position: relative; }
   summary::-webkit-details-marker { display: none; }
-  summary::after { content: '+'; position: absolute; right: 24px; top: 50%; transform: translateY(-50%); font-size: 1.6rem; color: var(--teal-glow); transition: transform 0.3s; }
+  summary::after { content: '+'; position: absolute; right: 24px; top: 50%; transform: translateY(-50%); font-size: 1.6rem; color: var(--accent); transition: transform 0.3s; }
   details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
   summary h3 { margin: 0; font-size: 1.15rem; }
   details p { padding: 0 24px 22px; margin: 0; }

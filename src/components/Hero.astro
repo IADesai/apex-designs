@@ -1,46 +1,46 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo/apex-logo.png';
+---
 <section class="hero" data-hero="fallback" aria-labelledby="hero-title">
-  <div class="fallback" aria-hidden="true">
-    <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMax slice">
-      <polygon points="600,90 900,600 300,600" fill="#2B3030"/>
-      <polygon points="600,90 640,170 615,158 590,205 570,150" fill="#F4FAF7" opacity=".9"/>
-      <polygon points="300,300 520,600 60,600" fill="#3E7D6E" opacity=".85"/>
-      <polygon points="880,250 1150,600 640,600" fill="#3E7D6E" opacity=".75"/>
-      <polygon points="560,360 760,600 380,600" fill="#4F9A87" opacity=".9"/>
-    </svg>
-  </div>
-  <canvas data-hero-canvas aria-hidden="true"></canvas>
-  <div class="veil" aria-hidden="true"></div>
-  <div class="container content">
-    <span class="eyebrow">Romford · East London · Essex · UK-wide</span>
-    <h1 id="hero-title">Websites that <span class="accent">click.</span><span class="sub">Web design in Romford &amp; East London</span></h1>
-    <p class="lead">I'm Ibrahim, a one-person web studio building fast, custom websites for local businesses. Clear prices from £300, and you deal with me from the first call to launch day.</p>
-    <div class="ctas">
-      <a class="btn btn-primary" href="/quote/" data-track="hero-quote" data-magnetic>Get a free quote</a>
-      <a class="btn btn-ghost" href="/services/" data-track="hero-packages">See packages</a>
+  <div class="container grid">
+    <div class="copy">
+      <span class="eyebrow">Romford · East London · Essex · UK-wide</span>
+      <h1 id="hero-title">Websites that <span class="accent">click.</span><span class="sub">Web design in Romford &amp; East London</span></h1>
+      <p class="lead">I'm Ibrahim, a one-person web studio building fast, custom websites for local businesses. Clear prices from £300, and you deal with me from the first call to launch day.</p>
+      <div class="ctas">
+        <a class="btn btn-primary btn-display" href="/services/" data-track="hero-packages" data-magnetic>View services</a>
+        <a class="btn btn-ghost" href="/quote/" data-track="hero-quote">Get a free quote</a>
+      </div>
+      <p class="proof"><span aria-hidden="true">★★★★★</span> Rated <strong>Excellent</strong> on Google · 5 reviews</p>
     </div>
-    <p class="proof"><span aria-hidden="true">★★★★★</span> Rated Excellent on Google</p>
+    <div class="visual" aria-hidden="true">
+      <Image class="fallback" src={logo} alt="" widths={[320, 520, 760]} sizes="(max-width: 900px) 70vw, 520px" loading="eager" />
+      <canvas data-hero-canvas></canvas>
+    </div>
   </div>
-  <div class="scroll-cue" aria-hidden="true"><span></span></div>
 </section>
 
 <style>
-  .hero { position: relative; min-height: 100svh; display: grid; align-items: end; overflow: hidden; isolation: isolate; }
-  .fallback, canvas, .veil { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .fallback { z-index: -3; background: radial-gradient(60% 60% at 50% 20%, rgb(62 125 110 / 0.35), transparent 70%), var(--ink); transition: opacity 1.2s; }
-  .fallback svg { position: absolute; inset: auto 0 0; width: 100%; height: 75%; opacity: 0.55; }
-  canvas { z-index: -2; opacity: 0; transition: opacity 1.4s var(--ease); }
-  .hero[data-hero='live'] canvas { opacity: 1; }
-  .hero[data-hero='live'] .fallback { opacity: 0; }
-  .veil { z-index: -1; background: linear-gradient(180deg, rgb(11 15 14 / 0.1) 0%, rgb(11 15 14 / 0.2) 45%, var(--ink) 100%); pointer-events: none; }
-  .content { padding-block: 140px clamp(80px, 12vh, 140px); }
+  .hero { position: relative; padding: clamp(120px, 14vw, 170px) 0 clamp(40px, 6vw, 80px); overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: auto -10% -30% 40%; height: 70%; background: radial-gradient(closest-side, rgb(62 125 110 / 0.1), transparent); pointer-events: none; }
+  .grid { position: relative; display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(24px, 4vw, 64px); align-items: center; min-height: min(78svh, 760px); }
+  .copy { position: relative; z-index: 1; }
   h1 { max-width: 12ch; }
-  .sub { display: block; margin-top: 0.6em; font: 500 clamp(1rem, 1.6vw, 1.25rem)/1.3 var(--font-body); letter-spacing: 0.02em; color: var(--mist-dim); }
-  .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 22px; }
-  .proof { font-size: 0.92rem; color: var(--mist-dim); }
-  .proof span { color: #f5c451; letter-spacing: 2px; margin-right: 6px; }
-  .scroll-cue { position: absolute; left: 50%; bottom: 24px; width: 22px; height: 36px; border: 1.5px solid var(--line); border-radius: 12px; transform: translateX(-50%); }
-  .scroll-cue span { position: absolute; left: 50%; top: 7px; width: 3px; height: 7px; border-radius: 2px; background: var(--teal-glow); transform: translateX(-50%); animation: cue 1.8s ease-in-out infinite; }
-  @keyframes cue { 0% { opacity: 0; transform: translate(-50%, 0); } 40% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, 12px); } }
+  .sub { display: block; margin-top: 0.55em; font: 500 clamp(1rem, 1.5vw, 1.2rem)/1.3 var(--font-body); letter-spacing: 0.01em; color: var(--text-dim); }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin: 30px 0 22px; }
+  .proof { font-size: 0.92rem; color: var(--text-dim); }
+  .proof span { color: #f5b301; letter-spacing: 2px; margin-right: 6px; }
+  .visual { position: relative; aspect-ratio: 1 / 0.95; width: 100%; }
+  .visual canvas, .visual :global(.fallback) { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .visual :global(.fallback) { object-fit: contain; padding: 6%; transition: opacity 0.8s; }
+  canvas { opacity: 0; transition: opacity 1s var(--ease); }
+  .hero[data-hero='live'] canvas { opacity: 1; }
+  .hero[data-hero='live'] .visual :global(.fallback) { opacity: 0; }
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; min-height: 0; }
+    .visual { order: -1; max-width: 460px; margin: -20px auto 0; aspect-ratio: 1 / 0.8; }
+  }
 </style>
 
 <script>

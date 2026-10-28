@@ -1,7 +1,10 @@
 ---
-import '@fontsource-variable/inter';
-import '@fontsource/playfair-display/600.css';
-import '@fontsource/playfair-display/600-italic.css';
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+import '@fontsource/poppins/600.css';
+import '@fontsource/playfair-display/700.css';
+import '@fontsource/playfair-display/700-italic.css';
+import '@fontsource/playfair-display/800.css';
 import '../styles/global.css';
 import Seo from '../components/Seo.astro';
 import Header from '../components/Header.astro';
@@ -25,13 +28,13 @@ const { jsonLd = [], ...seo } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0b0f0e" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#fffff2" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <Seo {...seo} jsonLd={[businessJsonLd(), ...jsonLd]} />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <div class="grain" aria-hidden="true"></div>
     <Header />
     <main id="main"><slot /></main>
     <Footer />

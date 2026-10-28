@@ -14,13 +14,13 @@ const { pkg } = Astro.props;
 </article>
 <style>
   .pkg { display: flex; flex-direction: column; gap: 6px; }
-  .featured { border-color: rgb(95 211 181 / 0.45); box-shadow: 0 30px 80px -40px rgb(95 211 181 / 0.5); }
-  .tag { align-self: flex-start; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); background: var(--teal-glow); padding: 0.35em 0.8em; border-radius: 999px; margin-bottom: 8px; }
+  .featured { border: 2px solid var(--teal); box-shadow: var(--shadow); }
+  .tag { align-self: flex-start; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--heading); background: var(--mustard); padding: 0.35em 0.8em; border-radius: 999px; margin-bottom: 8px; }
   .price { display: flex; align-items: baseline; gap: 10px; margin: 4px 0 8px; }
-  .amount { font: 600 clamp(2.4rem, 4vw, 3.2rem)/1 var(--font-display); }
-  .note { color: var(--mist-dim); }
-  .from { font-size: 0.85rem; font-weight: 600; color: var(--teal-glow); margin: 8px 0 0; }
+  .amount { font: 800 clamp(2.4rem, 4vw, 3.2rem)/1 var(--font-display); color: var(--heading); }
+  .note { color: var(--text-dim); }
+  .from { font-size: 0.85rem; font-weight: 600; color: var(--accent); margin: 8px 0 0; }
   ul { list-style: none; padding: 0; margin: 8px 0 24px; display: grid; gap: 10px; flex: 1; }
   li { padding-left: 26px; position: relative; }
-  li::before { content: ''; position: absolute; left: 0; top: 0.45em; width: 14px; height: 8px; border-left: 2px solid var(--teal-glow); border-bottom: 2px solid var(--teal-glow); transform: rotate(-45deg); }
+  li::before { content: ''; position: absolute; left: 0; top: 0.45em; width: 14px; height: 8px; border-left: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(-45deg); }
 </style>
