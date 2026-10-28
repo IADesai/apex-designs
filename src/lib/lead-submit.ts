@@ -7,14 +7,17 @@ export function leadEndpoint(supabaseUrl: string | undefined): string | undefine
   return supabaseUrl ? `${supabaseUrl.replace(/\/+$/, '')}/functions/v1/submit-lead` : undefined;
 }
 
-export function createLeadSubmitter(endpoint: string | undefined, fetchFn: typeof fetch) {
+export function createLeadSubmitter(endpoint: string | undefined, fetchFn: typeof fetch, timeoutMs = 20_000) {
   let inFlight = false;
   return async function submit(payload: Record<string, unknown>): Promise<SubmitOutcome> {
     if (!endpoint) return { ok: false, kind: 'unconfigured' };
     if (inFlight) return { ok: false, kind: 'busy' };
     inFlight = true;
+    // A stalled connection (common in in-app browsers) must end in the WhatsApp/email fallback, not an endless spinner.
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
     try {
-      const res = await fetchFn(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      const res = await fetchFn(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: controller.signal });
       if (res.status === 422) {
         const body = (await res.json().catch(() => ({}))) as { errors?: Record<string, string> };
         return { ok: false, kind: 'invalid', errors: body.errors ?? {} };
@@ -24,6 +27,7 @@ export function createLeadSubmitter(endpoint: string | undefined, fetchFn: typeo
     } catch {
       return { ok: false, kind: 'network' };
     } finally {
+      clearTimeout(timer);
       inFlight = false;
     }
   };

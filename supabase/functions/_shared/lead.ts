@@ -91,3 +91,15 @@ export function formatLeadEmail(lead: CleanLead, id: string, siteUrl = 'https://
   ];
   return { subject, text: body.join('\n') };
 }
+
+/** Caps lead-notification emails so a flood of fake submissions cannot exhaust the Hostinger mailbox. Leads are still saved. */
+export const NOTIFY_CAPS = { perHour: 20, perEmailPerHour: 3 } as const;
+
+export function shouldNotify(recent: { lastHour: number; sameEmailLastHour: number }): boolean {
+  return recent.lastHour < NOTIFY_CAPS.perHour && recent.sameEmailLastHour < NOTIFY_CAPS.perEmailPerHour;
+}
+
+/** Hostinger SMTP over implicit TLS (Supabase blocks 25/587), with short timeouts so a slow server cannot hang the function. */
+export function smtpOptions(host: string, user: string, pass: string) {
+  return { host, port: 465, secure: true, auth: { user, pass }, connectionTimeout: 10_000, greetingTimeout: 10_000, socketTimeout: 10_000 };
+}

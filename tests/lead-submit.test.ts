@@ -51,3 +51,16 @@ describe('buildMailto', () => {
     expect(url).toBe('mailto:hi@x.uk?subject=Website%20quote%20request%20from%20Sam%20%26%20Co&body=name%3A%20Sam%20%26%20Co%0Amessage%3A%20Line%201');
   });
 });
+
+describe('createLeadSubmitter timeout (final review)', () => {
+  it('gives up on a stalled request and reports network', async () => {
+    vi.useFakeTimers();
+    const f = vi.fn((_url: RequestInfo | URL, init?: RequestInit) => new Promise<Response>((_, reject) => {
+      init?.signal?.addEventListener('abort', () => reject(new DOMException('Aborted', 'AbortError')));
+    }));
+    const pending = createLeadSubmitter('https://e', f as unknown as typeof fetch, 20_000)({});
+    await vi.advanceTimersByTimeAsync(20_000);
+    expect(await pending).toEqual({ ok: false, kind: 'network' });
+    vi.useRealTimers();
+  });
+});

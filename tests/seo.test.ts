@@ -72,3 +72,12 @@ describe('other JSON-LD', () => {
     expect(ld.mainEntityOfPage).toBe('https://apexdesigns.org.uk/learn/t/');
   });
 });
+
+describe('serializeJsonLd', () => {
+  it('cannot be broken out of by a closing script tag (final review)', async () => {
+    const { serializeJsonLd } = await import('../src/lib/seo');
+    const out = serializeJsonLd({ reviewBody: 'nice</script><script>alert(1)</script>' });
+    expect(out).not.toContain('<');
+    expect(JSON.parse(out).reviewBody).toBe('nice</script><script>alert(1)</script>');
+  });
+});

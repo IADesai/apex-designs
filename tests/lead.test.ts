@@ -73,3 +73,18 @@ describe('formatLeadEmail', () => {
     expect(text).toContain('https://apexdesigns.org.uk/admin/#lead=abc-123');
   });
 });
+
+describe('notification cap and SMTP options (final review)', () => {
+  it('stops emailing when the endpoint is being flooded', async () => {
+    const { shouldNotify, NOTIFY_CAPS } = await import('../supabase/functions/_shared/lead.ts');
+    expect(shouldNotify({ lastHour: 0, sameEmailLastHour: 0 })).toBe(true);
+    expect(shouldNotify({ lastHour: NOTIFY_CAPS.perHour, sameEmailLastHour: 0 })).toBe(false);
+    expect(shouldNotify({ lastHour: 1, sameEmailLastHour: NOTIFY_CAPS.perEmailPerHour })).toBe(false);
+  });
+  it('sets short SMTP timeouts so a slow mail server cannot hang the function', async () => {
+    const { smtpOptions } = await import('../supabase/functions/_shared/lead.ts');
+    const o = smtpOptions('smtp.hostinger.com', 'u', 'p');
+    expect(o).toMatchObject({ host: 'smtp.hostinger.com', port: 465, secure: true, auth: { user: 'u', pass: 'p' } });
+    for (const k of ['connectionTimeout', 'greetingTimeout', 'socketTimeout'] as const) expect(o[k]).toBeLessThanOrEqual(10_000);
+  });
+});

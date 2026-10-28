@@ -1,5 +1,5 @@
 ---
-import { pageTitle, canonicalUrl } from '../lib/seo';
+import { pageTitle, canonicalUrl, serializeJsonLd } from '../lib/seo';
 import { site } from '../config/site';
 
 interface Props {
@@ -29,4 +29,4 @@ const ogImage = new URL(image, site.url).toString();
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
-{jsonLd.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d).replace(/</g, '\u003c')} />)}
+{jsonLd.map((d) => <script type="application/ld+json" set:html={serializeJsonLd(d)} />)}

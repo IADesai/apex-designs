@@ -79,3 +79,11 @@ export function articleJsonLd(a: { title: string; description: string; path: str
     mainEntityOfPage: canonicalUrl(a.path),
   };
 }
+
+// Built at runtime so no tool or shell can collapse the escape: the 6 characters backslash-u-0-0-3-c.
+const LT_ESCAPE = String.fromCharCode(92) + 'u003c';
+
+/** JSON for a <script type="application/ld+json"> tag. Escapes "<" so content can never close the tag. */
+export function serializeJsonLd(d: Record<string, unknown>): string {
+  return JSON.stringify(d).replace(/</g, LT_ESCAPE);
+}
