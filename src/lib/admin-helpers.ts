@@ -24,7 +24,7 @@ export function trackedUrl(siteUrl: string, destination: string, slug: string): 
 }
 
 export function shareText(url: string): string {
-  return `Need a website for your business? I'm Ibrahim from Apex Designs in Romford. Custom sites from ${packages[0].price}, built by one person from start to finish. Have a look: ${url}`;
+  return `Need a website for your business? Apex Designs in Romford builds custom sites from ${packages[0].price}, with one team looking after you from start to finish. Have a look: ${url}`;
 }
 
 export function conversionRate(leads: number, landings: number): string {

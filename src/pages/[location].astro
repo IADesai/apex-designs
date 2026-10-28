@@ -33,7 +33,7 @@ const others = locations.filter((l) => l.slug !== loc.slug);
   <section class="container grid-2 intro">
     <div class="prose" data-reveal>{loc.intro.map((p) => <p>{p}</p>)}</div>
     <div class="card" data-reveal>
-      <h2 class="h3">Areas I cover near {loc.place}</h2>
+      <h2 class="h3">Areas we cover near {loc.place}</h2>
       <ul class="chips">{loc.nearby.map((n) => <li>{n}</li>)}</ul>
     </div>
   </section>
@@ -48,7 +48,7 @@ const others = locations.filter((l) => l.slug !== loc.slug);
     <section class="section">
       <div class="container">
         <span class="eyebrow">Recent work</span>
-        <h2>Websites I have built</h2>
+        <h2>Websites we have built</h2>
         <div class="grid-2" data-reveal-stagger>{work.map((entry) => <WorkCard entry={entry} />)}</div>
       </div>
     </section>

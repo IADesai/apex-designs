@@ -5,7 +5,7 @@ sector: Banqueting & events
 location: East London
 summary: A modern, contemporary website for a newly opened banqueting suite that needed to match an established visual identity.
 image: ../../assets/work/damal-banqueting.png
-order: 2
+order: 4
 services: [Custom design, Multi-page website, Event enquiries]
 ---
 
@@ -15,7 +15,7 @@ Damal opened a new banqueting suite, and it deserved a site that fit its establi
 
 ## The approach
 
-I went modern and contemporary, drawing on the style of Meet Bros, with large imagery of the space and a clear path for people planning weddings and events to get in touch.
+We went modern and contemporary, drawing on the style of Meet Bros, with large imagery of the space and a clear path for people planning weddings and events to get in touch.
 
 ## The result
 

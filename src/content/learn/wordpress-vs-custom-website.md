@@ -5,9 +5,9 @@ published: 2026-10-27
 tags: [wordpress, performance, small business]
 ---
 
-A lot of the businesses I speak to in Romford and East London already have a website, and a big share of those sites run on WordPress. Often it was set up years ago by a friend, a nephew or a cheap agency, and now it is slow, hard to change and nobody quite remembers the password. So the question comes up: should you fix the WordPress site, or start again with something custom-coded?
+A lot of the businesses we speak to in Romford and East London already have a website, and a big share of those sites run on WordPress. Often it was set up years ago by a friend, a nephew or a cheap agency, and now it is slow, hard to change and nobody quite remembers the password. So the question comes up: should you fix the WordPress site, or start again with something custom-coded?
 
-I have built on both, including my own old site, so this is an honest comparison rather than a sales pitch for one side.
+We have built on both, including our own old site, so this is an honest comparison rather than a sales pitch for one side.
 
 ## Why this question comes up
 
@@ -38,7 +38,7 @@ None of these are deal-breakers on their own, but together they mean a "cheap" W
 
 ## What "custom-coded" means
 
-When I say custom-coded, I mean a site built specifically for your business using modern web tools, then published as fast, static pages. There is no database to hack, no plugins to update and nothing running on a server waiting to be exploited.
+When we say custom-coded, we mean a site built specifically for your business using modern web tools, then published as fast, static pages. There is no database to hack, no plugins to update and nothing running on a server waiting to be exploited.
 
 The benefits for a small business are straightforward:
 
@@ -47,7 +47,7 @@ The benefits for a small business are straightforward:
 - **Low running costs.** Static sites can be hosted very cheaply, sometimes for free.
 - **No surprise breakages.** Nothing changes unless someone deliberately changes it.
 
-The trade-off is editing. You do not get a WordPress-style dashboard, so content changes usually go through your developer. For most local businesses that is fine, because the content changes a few times a year, and on my Premium package small changes are included in the monthly support.
+The trade-off is editing. You do not get a WordPress-style dashboard, so content changes usually go through your developer. For most local businesses that is fine, because the content changes a few times a year, and on our Premium package small changes are included in the monthly support.
 
 ## Speed, Google and Core Web Vitals
 
@@ -59,7 +59,7 @@ A lean custom site makes it much easier to score well on these measurements with
 
 Here is a simple way to decide:
 
-| Your situation | My recommendation |
+| Your situation | Our recommendation |
 | --- | --- |
 | A few pages that rarely change, and you want it fast and low-maintenance | Custom-coded |
 | You post articles or news every week yourself | WordPress (kept lean, with few plugins) |
@@ -76,4 +76,4 @@ If you decide to move, the biggest worry is usually losing the Google rankings y
 3. **Keep the content that works.** If a page ranks well, improve it rather than throwing it away.
 4. **Submit the new sitemap** in Google Search Console once the new site is live, and keep an eye on any "page not found" errors for a few weeks.
 
-That is exactly the process I follow for revamps. If your current site feels slow or fragile, have a look at my [packages and prices](/services/) or [request a free quote](/quote/), and I will tell you honestly whether a fix or a rebuild makes more sense.
+That is exactly the process we follow for revamps. If your current site feels slow or fragile, have a look at our [packages and prices](/services/) or [request a free quote](/quote/), and we will tell you honestly whether a fix or a rebuild makes more sense.

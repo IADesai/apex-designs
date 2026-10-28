@@ -55,11 +55,13 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   display: inline-flex; align-items: center; justify-content: center; gap: 0.6em;
   padding: 0.95em 1.6em; border-radius: var(--radius-sm); border: 1px solid transparent;
   font: 600 1rem/1 var(--font-body); text-decoration: none; cursor: pointer;
-  transition: transform 0.25s var(--ease), background 0.25s, box-shadow 0.25s, border-color 0.25s;
+  /* Hover lifts use `translate`, never `transform`: GSAP owns transform (reveals, magnetic buttons),
+     and a CSS transition on the same property makes GSAP cache half-finished values. */
+  transition: translate 0.25s var(--ease), background 0.25s, box-shadow 0.25s, border-color 0.25s;
 }
 /* The old site's mustard button, kept. */
 .btn-primary { background: var(--mustard); color: var(--heading); box-shadow: 0 0 10px rgb(0 0 0 / 0.18); }
-.btn-primary:hover { background: var(--mustard-dark); box-shadow: 0 8px 20px -6px rgb(0 0 0 / 0.3); transform: translateY(-1px); }
+.btn-primary:hover { background: var(--mustard-dark); box-shadow: 0 8px 20px -6px rgb(0 0 0 / 0.3); translate: 0 -1px; }
 .btn-display { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
 .btn-ghost { border-color: var(--teal); background: transparent; color: var(--accent); }
 .btn-ghost:hover { background: var(--teal); color: #fff; }
@@ -71,9 +73,9 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   background: var(--surface);
   box-shadow: var(--shadow-sm);
   padding: clamp(20px, 3vw, 32px);
-  transition: box-shadow 0.3s var(--ease), transform 0.3s var(--ease);
+  transition: box-shadow 0.3s var(--ease), translate 0.3s var(--ease);
 }
-[data-spotlight]:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+[data-spotlight]:hover { box-shadow: var(--shadow); translate: 0 -3px; }
 
 .grid-3 { display: grid; gap: clamp(16px, 2vw, 24px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
 .grid-2 { display: grid; gap: clamp(16px, 2vw, 24px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }

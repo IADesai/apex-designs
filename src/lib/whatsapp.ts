@@ -4,4 +4,4 @@ export function whatsappUrl(number: string, text?: string): string {
   return text ? `${base}?text=${encodeURIComponent(text)}` : base;
 }
 
-export const DEFAULT_WA_TEXT = "Hi Ibrahim, I'd like to chat about a website.";
+export const DEFAULT_WA_TEXT = "Hi Apex Designs, I'd like to chat about a website.";

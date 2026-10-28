@@ -25,7 +25,6 @@ export function businessJsonLd(revs: Review[] = allReviews): Record<string, unkn
     email: site.email,
     slogan: site.tagline,
     priceRange: '££',
-    founder: { '@type': 'Person', name: site.founder },
     address: {
       '@type': 'PostalAddress',
       addressLocality: site.base.locality,
@@ -74,7 +73,7 @@ export function articleJsonLd(a: { title: string; description: string; path: str
     description: a.description,
     datePublished: a.published.toISOString(),
     dateModified: (a.updated ?? a.published).toISOString(),
-    author: { '@type': 'Person', name: site.founder, url: `${site.url}/about/` },
+    author: { '@type': 'Organization', name: site.name, url: `${site.url}/about/` },
     publisher: { '@id': `${site.url}/#business` },
     mainEntityOfPage: canonicalUrl(a.path),
   };

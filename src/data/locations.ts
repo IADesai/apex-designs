@@ -23,8 +23,8 @@ export const locations: Location[] = [
     eyebrow: 'Based in Romford',
     h1: 'Web design in Romford, from someone down the road',
     intro: [
-      'Apex Designs is based in Romford, so when you work with me you are working with a local. I build custom websites for shops, trades, restaurants and professional services across Havering, from the Market Place and South Street to Gidea Park and Harold Wood.',
-      'You deal with me directly from the first conversation to launch day. No account managers, no outsourcing, and no templates dressed up as custom work.',
+      'Apex Designs is based in Romford, so when you work with us you are working with a local team. We build custom websites for shops, trades, restaurants and professional services across Havering, from the Market Place and South Street to Gidea Park and Harold Wood.',
+      'You deal with us directly from the first conversation to launch day. No account managers, no outsourcing, and no templates dressed up as custom work.',
     ],
     nearby: ['Hornchurch', 'Upminster', 'Gidea Park', 'Harold Wood', 'Collier Row', 'Rainham', 'Elm Park', 'Chadwell Heath'],
     points: [
@@ -33,7 +33,7 @@ export const locations: Location[] = [
       { title: 'Clear, local pricing', text: 'Packages from £300, so a professional site is realistic for small Romford businesses.' },
     ],
     faqs: [
-      { q: 'Do you meet clients in person in Romford?', a: 'Yes. I am Romford-based and happy to meet locally, though most of the process works well over WhatsApp and video calls.' },
+      { q: 'Do you meet clients in person in Romford?', a: 'Yes. We are Romford-based and happy to meet locally, though most of the process works well over WhatsApp and video calls.' },
       { q: 'Can you help my Romford business show up on Google Maps?', a: 'Yes. The Premium package includes setting up and optimising your Google Business Profile, which is what powers the map results.' },
     ],
     work: ['whitebeard', 'my-thermomix-my-way'],
@@ -42,22 +42,22 @@ export const locations: Location[] = [
     slug: 'web-design-east-london',
     place: 'East London',
     title: 'Web Design East London',
-    description: 'Custom websites for East London businesses, from Whitechapel to Stratford and Ilford. Affordable packages, fast sites, and one person who answers the phone.',
+    description: 'Custom websites for East London businesses, from Whitechapel to Stratford and Ilford. Affordable packages, fast sites, and a team that answers the phone.',
     eyebrow: 'Across East London',
     h1: 'Web design for East London businesses that want to stand out',
     intro: [
       'East London moves fast and competition is everywhere. Whether you run a restaurant in Whitechapel, a salon in Stratford or a firm in Ilford, your website is often the first impression, and it has to look the part on a phone in seconds.',
-      'I have built sites for East London businesses like Damal in Whitechapel, matching their identity and making it simple for customers to find what they need.',
+      'We have built sites for East London businesses like Damal, matching their identity and making it simple for customers to find what they need.',
     ],
     nearby: ['Whitechapel', 'Stratford', 'Ilford', 'Barking', 'Dagenham', 'Bethnal Green', 'Walthamstow', 'East Ham', 'Leytonstone'],
     points: [
       { title: 'Built for mobile', text: 'Most of your visitors are on their phone. Every page is designed and tested mobile-first.' },
-      { title: 'Personal service', text: 'One person from brief to launch, so nothing gets lost between a sales team and a developer.' },
+      { title: 'Personal service', text: 'The same small team from brief to launch, so nothing gets lost between a sales team and a developer.' },
       { title: 'Proven locally', text: 'Restaurant, banqueting and professional-service sites already live for East London clients.' },
     ],
     faqs: [
-      { q: 'Which parts of East London do you cover?', a: 'All of it, from Tower Hamlets and Newham to Redbridge, Barking & Dagenham and Waltham Forest. I am based in Romford, just up the road.' },
-      { q: 'Do you build restaurant websites?', a: 'Yes. Damal Restaurant and Damal Banqueting are both East London hospitality sites I designed and built.' },
+      { q: 'Which parts of East London do you cover?', a: 'All of it, from Tower Hamlets and Newham to Redbridge, Barking & Dagenham and Waltham Forest. We are based in Romford, just up the road.' },
+      { q: 'Do you build restaurant websites?', a: 'Yes. Damal Restaurant and Damal Banqueting are both East London hospitality sites we designed and built.' },
     ],
     work: ['damal-restaurant', 'damal-banqueting'],
   },
@@ -69,8 +69,8 @@ export const locations: Location[] = [
     eyebrow: 'On the Essex border',
     h1: 'Web design for Essex businesses, from the edge of Romford',
     intro: [
-      'Romford sits right on the Essex border, so Brentwood, Basildon, Chelmsford and Thurrock are all close to home. I work with Essex businesses that want a modern website without agency prices.',
-      'Whether you are a trade covering half the county or a shop on the high street, I will build a site that explains what you do clearly and makes it easy to get in touch.',
+      'Romford sits right on the Essex border, so Brentwood, Basildon, Chelmsford and Thurrock are all close to home. We work with Essex businesses that want a modern website without agency prices.',
+      'Whether you are a trade covering half the county or a shop on the high street, we will build a site that explains what you do clearly and makes it easy to get in touch.',
     ],
     nearby: ['Brentwood', 'Basildon', 'Chelmsford', 'Billericay', 'Grays', 'Thurrock', 'Southend-on-Sea', 'Epping'],
     points: [
@@ -92,7 +92,7 @@ export const locations: Location[] = [
     eyebrow: 'Anywhere in the UK',
     h1: 'Remote web design for businesses anywhere in the UK',
     intro: [
-      'You do not need a local web designer to get a great website. I work with clients well beyond London, including a business in Oxford, and the process is designed to work entirely remotely.',
+      'You do not need a local web designer to get a great website. We work with clients well beyond London, including Al Ansaar, a charity in Oxford, and the process is designed to work entirely remotely.',
       'We start with a video call, you get a scheduled plan with dates, and you see progress as it happens, with updates over WhatsApp or email, whichever you prefer.',
     ],
     nearby: ['London', 'Oxford', 'Kent', 'Hertfordshire', 'Surrey', 'Cambridge', 'Birmingham', 'Manchester'],
@@ -105,6 +105,6 @@ export const locations: Location[] = [
       { q: 'How does working remotely actually work?', a: 'A video call to understand your business, a written plan with dates, then progress links you can open on any device. Feedback goes over WhatsApp or email.' },
       { q: 'Do you have clients outside London?', a: 'Yes, including a client in Oxford. Location makes no difference to how the project runs.' },
     ],
-    work: ['my-thermomix-my-way', 'whitebeard'],
+    work: ['al-ansaar', 'whitebeard'],
   },
 ];

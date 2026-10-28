@@ -5,7 +5,7 @@ published: 2026-10-27
 tags: [google business profile, local seo, google maps]
 ---
 
-If you run a local shop, salon, restaurant or trade business, your Google Business Profile is one of the most valuable things you can set up, and it is free. It is the panel that appears on Google Maps and on the right-hand side of search results, with your opening hours, photos, reviews and a button to call you. Here is how to set it up properly, and the mistakes I see most often when I take on new clients.
+If you run a local shop, salon, restaurant or trade business, your Google Business Profile is one of the most valuable things you can set up, and it is free. It is the panel that appears on Google Maps and on the right-hand side of search results, with your opening hours, photos, reviews and a button to call you. Here is how to set it up properly, and the mistakes we see most often when we take on new clients.
 
 ## Why it matters more than you think
 
@@ -69,7 +69,7 @@ Your profile and your website should back each other up.
 
 ## Common mistakes
 
-These are the problems I fix most often:
+These are the problems we fix most often:
 
 - **Keyword-stuffing the business name**, for example "Smith's Plumbing Romford Emergency Plumber Best Prices". It can get your profile suspended.
 - **Choosing the wrong primary category**, which means you do not show up for your main service.
@@ -79,4 +79,4 @@ These are the problems I fix most often:
 
 ## Want it done for you?
 
-Setting up a profile properly takes a few hours, and keeping it fresh takes a little time every month. My Premium package includes Google Business Profile setup alongside your website, so the two work together from day one. Have a look at the [packages and prices](/services/), read more about [web design in East London](/web-design-east-london/), or [request a free quote](/quote/) and I will take a look at where you are now.
+Setting up a profile properly takes a few hours, and keeping it fresh takes a little time every month. Our Premium package includes Google Business Profile setup alongside your website, so the two work together from day one. Have a look at the [packages and prices](/services/), read more about [web design in East London](/web-design-east-london/), or [request a free quote](/quote/) and we will take a look at where you are now.

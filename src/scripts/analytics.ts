@@ -50,10 +50,10 @@ document.addEventListener('click', (e) => {
   if (cta) tracker.track('cta_click', { id: cta.dataset.track });
 });
 
-// Tell Ibrahim which link someone came from when they open WhatsApp.
+// Tell the team which link someone came from when they open WhatsApp.
 const ref = tracker.leadContext().ref;
 if (ref) {
-  const text = `Hi Ibrahim, I found Apex Designs via ${ref}. I'd like to chat about a website.`;
+  const text = `Hi, I found Apex Designs via ${ref}. I'd like to chat about a website.`;
   document.querySelectorAll<HTMLAnchorElement>('a[data-wa]').forEach((a) => { a.href = whatsappUrl(site.whatsapp, text); });
 }
 

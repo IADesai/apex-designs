@@ -25,10 +25,11 @@ export function initMotion(): void {
   gsap.ticker.lagSmoothing(0);
 
   gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((el) => {
-    gsap.from(el, { y: 48, autoAlpha: 0, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+    // clearProps hands the element back to CSS once it lands, so nothing is left offset.
+    gsap.from(el, { y: 48, autoAlpha: 0, duration: 1.1, ease: 'power3.out', clearProps: 'transform', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
   });
   gsap.utils.toArray<HTMLElement>('[data-reveal-stagger]').forEach((el) => {
-    gsap.from(el.children, { y: 36, autoAlpha: 0, duration: 0.9, stagger: 0.09, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 85%', once: true } });
+    gsap.from(el.children, { y: 36, autoAlpha: 0, duration: 0.9, stagger: 0.09, ease: 'power3.out', clearProps: 'transform', scrollTrigger: { trigger: el, start: 'top 85%', once: true } });
   });
 
   if (fine) {

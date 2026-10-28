@@ -10,16 +10,17 @@ import { packages } from '../data/packages';
 import { reviews } from '../data/reviews';
 import { locations } from '../data/locations';
 
-const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+// The four most recent projects keep the two-column grid even; the rest live on /work/.
+const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order).slice(0, 4);
 const why = [
   { n: '01', title: 'Built around your customers', text: 'Every page is planned around what your customers need to see and do, not around a template.' },
   { n: '02', title: 'Fast by default', text: 'Lightweight, modern builds that load quickly on phones and give Google what it looks for.' },
-  { n: '03', title: 'One person, start to finish', text: 'You talk to the person designing and building your site. Quick answers, no hand-offs.' },
+  { n: '03', title: 'One team, start to finish', text: 'You talk directly to the people designing and building your site. Quick answers, no hand-offs.' },
 ];
 const steps = [
   { title: 'Chat', text: 'A free consultation call or WhatsApp chat about your business and goals.' },
   { title: 'Plan', text: 'A scheduled development plan with clear dates and a fixed price.' },
-  { title: 'Build', text: 'I design and build your site, and you see progress along the way.' },
+  { title: 'Build', text: 'We design and build your site, and you see progress along the way.' },
   { title: 'Launch & grow', text: 'We go live, connect Google, and keep improving with ongoing support.' },
 ];
 ---
@@ -87,7 +88,7 @@ const steps = [
   <section class="section">
     <div class="container grid-2 areas">
       <div data-reveal>
-        <span class="eyebrow">Where I work</span>
+        <span class="eyebrow">Where we work</span>
         <h2>Romford-based, working UK-wide</h2>
         <p class="lead">Based in Romford, building for businesses across Havering, East London and Essex, with clients as far as Oxford.</p>
       </div>

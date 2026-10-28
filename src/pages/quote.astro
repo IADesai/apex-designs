@@ -8,10 +8,10 @@ import { breadcrumbJsonLd } from '../lib/seo';
 ---
 <BaseLayout
   title="Get a Free Website Quote"
-  description="Tell me about your business and get a clear plan and price for your new website. Romford-based, working across East London, Essex and the UK."
+  description="Tell us about your business and get a clear plan and price for your new website. Romford-based, working across East London, Essex and the UK."
   jsonLd={[breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Get a quote', path: '/quote/' }])]}
 >
-  <PageHero eyebrow="Free quote" lead="A few details and I will come back to you with a clear plan and price. No pressure, no jargon.">Get a free website quote</PageHero>
+  <PageHero eyebrow="Free quote" lead="A few details and we will come back to you with a clear plan and price. No pressure, no jargon.">Get a free website quote</PageHero>
 
   <section class="container quote">
     <form id="quote-form" class="card form" novalidate data-state="idle">
@@ -20,8 +20,8 @@ import { breadcrumbJsonLd } from '../lib/seo';
         <label>Email<input name="email" type="email" autocomplete="email" required maxlength="200" /><span class="err" data-error-for="email"></span></label>
       </div>
       <div class="row">
-        <label>Phone <span class="opt">(optional)</span><input name="phone" type="tel" autocomplete="tel" maxlength="30" /><span class="err" data-error-for="phone"></span></label>
-        <label>Business <span class="opt">(optional)</span><input name="business" autocomplete="organization" maxlength="120" /><span class="err" data-error-for="business"></span></label>
+        <label><span>Phone <span class="opt">(optional)</span></span><input name="phone" type="tel" autocomplete="tel" maxlength="30" /><span class="err" data-error-for="phone"></span></label>
+        <label><span>Business <span class="opt">(optional)</span></span><input name="business" autocomplete="organization" maxlength="120" /><span class="err" data-error-for="business"></span></label>
       </div>
       <label>Package
         <select name="package">
@@ -37,13 +37,13 @@ import { breadcrumbJsonLd } from '../lib/seo';
       <div class="hp" aria-hidden="true"><label>Leave this empty<input name="hp" tabindex="-1" autocomplete="off" /></label></div>
       <button class="btn btn-primary" type="submit" data-track="quote-submit">Send my request</button>
       <p class="status" data-status role="status" aria-live="polite"></p>
-      <p class="muted small">I only use your details to reply to your enquiry. See the <a href="/privacy/">privacy policy</a>.</p>
+      <p class="muted small">We only use your details to reply to your enquiry. See the <a href="/privacy/">privacy policy</a>.</p>
     </form>
 
     <aside class="card side">
       <h2 class="h3">Prefer to chat?</h2>
-      <p class="muted">Message me directly on WhatsApp or by email.</p>
-      <a class="btn btn-ghost" href={whatsappUrl(site.whatsapp, DEFAULT_WA_TEXT)} data-wa target="_blank" rel="noopener">WhatsApp Ibrahim</a>
+      <p class="muted">Message us directly on WhatsApp or by email.</p>
+      <a class="btn btn-ghost" href={whatsappUrl(site.whatsapp, DEFAULT_WA_TEXT)} data-wa target="_blank" rel="noopener">WhatsApp us</a>
       <a class="btn btn-ghost" href={`mailto:${site.email}`}>{site.email}</a>
       <noscript><p class="muted">JavaScript is turned off, so the form cannot send. Please use WhatsApp or email instead.</p></noscript>
     </aside>

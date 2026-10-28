@@ -1,11 +1,11 @@
 ---
 import { Picture } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
-interface Props { entry: CollectionEntry<'work'> }
-const { entry } = Astro.props;
+interface Props { entry: CollectionEntry<'work'>; featured?: boolean }
+const { entry, featured = false } = Astro.props;
 const { title, sector, summary, image } = entry.data;
 ---
-<a class="work card" href={`/work/${entry.id}/`} data-spotlight data-track={`work-${entry.id}`}>
+<a class:list={['work card', { featured }]} href={`/work/${entry.id}/`} data-spotlight data-track={`work-${entry.id}`}>
   <div class="media">
     <Picture src={image} formats={['avif', 'webp']} widths={[480, 800, 1200]} sizes="(max-width: 700px) 100vw, 50vw" alt={`${title} website shown on devices`} />
   </div>
@@ -22,5 +22,13 @@ const { title, sector, summary, image } = entry.data;
   .media :global(img) { width: 100%; height: 100%; object-fit: contain; transition: transform 0.8s var(--ease); }
   .work:hover .media :global(img) { transform: scale(1.04) translateY(-4px); }
   .meta { padding: 0 8px 8px; }
+  /* Featured: spans the whole grid row, image and text side by side on wide screens. */
+  .featured { grid-column: 1 / -1; }
+  @media (min-width: 900px) {
+    .featured { flex-direction: row; align-items: center; gap: clamp(24px, 4vw, 56px); }
+    .featured .media { flex: 1.5; }
+    .featured .meta { flex: 1; padding: 0 24px 0 0; }
+    .featured h3 { font-size: clamp(1.6rem, 2.6vw, 2.2rem); }
+  }
   .eyebrow { margin-bottom: 0.6rem; }
 </style>

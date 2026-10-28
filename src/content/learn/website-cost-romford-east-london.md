@@ -5,7 +5,7 @@ published: 2026-10-27
 tags: [pricing, small business, romford, east london]
 ---
 
-"How much does a website cost?" is the first question almost every business owner asks me, and it is a fair one. The honest answer is that it depends, but that is not much use when you are trying to set a budget. So here is what I actually see across Romford, East London and Essex in 2026, what pushes the price up or down, and how to tell a good quote from a bad one.
+"How much does a website cost?" is the first question almost every business owner asks us, and it is a fair one. The honest answer is that it depends, but that is not much use when you are trying to set a budget. So here is what we actually see across Romford, East London and Essex in 2026, what pushes the price up or down, and how to tell a good quote from a bad one.
 
 ## The short answer
 
@@ -15,7 +15,7 @@ Across the UK, small business websites tend to fall into three rough bands:
 - **Freelancers** typically charge anywhere from roughly £300 to £3,000 for a small business site, depending on experience, number of pages and how much is custom.
 - **Agencies** commonly start around £3,000 and can go well past £15,000 once strategy, copywriting, photography and ongoing retainers are included.
 
-For context, here is where my own prices sit:
+For context, here is where our own prices sit:
 
 | Package | Price | What it is |
 | --- | --- | --- |
@@ -23,7 +23,7 @@ For context, here is where my own prices sit:
 | Premium | £500 + £15/month | Everything in Standard plus a multi-page site, Google Business Profile, Google Analytics and continuous support |
 | Custom | On quote | Everything in Premium plus custom coded systems, brand-specific design, on-call maintenance and continuous page updates |
 
-I keep prices public because I think you should know roughly what you will pay before you pick up the phone.
+We keep prices public because we think you should know roughly what you will pay before you pick up the phone.
 
 ## What actually drives the price
 
@@ -62,11 +62,11 @@ When you compare quotes, look at the full picture over a year or two, not just t
 - **Email**: a professional address at your own domain, sometimes bundled with hosting, sometimes a few pounds per mailbox per month.
 - **Maintenance**: updates, backups, security patches and small edits.
 
-On my Premium package, the £15 a month covers continuous support: keeping your site running, small changes when you need them, and help with your Google Business Profile and analytics.
+On our Premium package, the £15 a month covers continuous support: keeping your site running, small changes when you need them, and help with your Google Business Profile and analytics.
 
 ## Red flags when comparing quotes
 
-Price is not the only thing to compare. These are the warning signs I would look out for:
+Price is not the only thing to compare. These are the warning signs we would look out for:
 
 - **You don't own the site or the domain.** Make sure the domain is registered in your name and that you can take your website elsewhere if you ever want to.
 - **No plan or dates.** A good quote tells you what happens when. If nobody can tell you when you will see a first version, expect delays.
@@ -74,7 +74,7 @@ Price is not the only thing to compare. These are the warning signs I would look
 - **"Guaranteed number one on Google."** Nobody can guarantee rankings. Anyone who does is either guessing or doing something that could get your site penalised.
 - **Vague scope.** "A website" is not a specification. You should know how many pages, what features and what is not included.
 
-## What I'd recommend for most local businesses
+## What we'd recommend for most local businesses
 
 If you are a shop, trade, salon, restaurant or professional service in Romford or East London, you probably do not need an agency-sized project to start. A clear, fast, custom single page that explains what you do, shows your reviews and makes it easy to call, message or request a quote will outperform a cluttered site every time.
 
@@ -84,4 +84,4 @@ If your business has something more unusual, such as bookings, lead routing or a
 
 ## Get a price for your business
 
-Every business is different, so the quickest way to get a real number is to tell me what you need. Have a look at the [packages and prices](/services/), or [request a free quote](/quote/) and I will come back with a clear plan and a fixed price. If you are local, you can read more about [web design in Romford](/web-design-romford/).
+Every business is different, so the quickest way to get a real number is to tell us what you need. Have a look at the [packages and prices](/services/), or [request a free quote](/quote/) and we will come back with a clear plan and a fixed price. If you are local, you can read more about [web design in Romford](/web-design-romford/).

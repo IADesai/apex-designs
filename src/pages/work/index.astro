@@ -9,12 +9,12 @@ const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.
 ---
 <BaseLayout
   title="Web Design Portfolio"
-  description="Websites built by Apex Designs for restaurants, venues, sales funnels and professional services across East London and beyond."
+  description="Websites built by Apex Designs for charities, restaurants, venues, sales funnels and professional services across London, Oxford and the UK."
   jsonLd={[breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Work', path: '/work/' }])]}
 >
-  <PageHero eyebrow="Work" lead="Real sites for real local businesses, each one designed around its customers.">Web design portfolio</PageHero>
+  <PageHero eyebrow="Work" lead="Real sites for real businesses and charities, each one designed around the people it serves.">Web design portfolio</PageHero>
   <section class="container tight">
-    <div class="grid-2" data-reveal-stagger>{work.map((entry) => <WorkCard entry={entry} />)}</div>
+    <div class="grid-2" data-reveal-stagger>{work.map((entry, i) => <WorkCard entry={entry} featured={i === 0} />)}</div>
   </section>
   <CtaBand heading="Want yours here next?" />
 </BaseLayout>

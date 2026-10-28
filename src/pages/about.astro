@@ -6,26 +6,26 @@ import { breadcrumbJsonLd } from '../lib/seo';
 const values = [
   { title: 'Commitment to quality', text: 'Quality and user experience come first in every project, however small.' },
   { title: 'Passion for design', text: 'Creativity and precision in every site, so it looks like your business, not a template.' },
-  { title: 'Personalised service', text: 'Apex is a one-person studio. You get one-to-one attention from the person doing the work.' },
+  { title: 'Personalised service', text: 'A small, hands-on team. You talk directly to the people doing the work, never a sales desk.' },
 ];
 ---
 <BaseLayout
-  title="About Ibrahim, Romford Web Designer"
-  description="Apex Designs is a one-person web studio in Romford run by Ibrahim, building custom websites for local businesses across East London, Essex and the UK."
+  title="About Apex Designs, Romford Web Design Studio"
+  description="Apex Designs is a web design studio in Romford building custom websites for businesses across East London, Essex and the UK."
   jsonLd={[breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }])]}
 >
   <PageHero eyebrow="About" lead="Apex Designs was born out of a love for design and a desire to help businesses shine online.">
-    Hi, I'm Ibrahim, a web designer in Romford
+    A web design studio based in Romford
   </PageHero>
   <section class="container prose about" data-reveal>
-    <p>I started Apex Designs to give small businesses the kind of website usually reserved for companies with big budgets. Each project starts with understanding your business, your audience and what you want the site to achieve. Then I design and build something that fits.</p>
-    <p>Because Apex is just me, you get one-to-one attention from start to finish. You will never be passed to an account manager or wait days for a reply. My portfolio includes clients like Damal, a Somali restaurant in Whitechapel, and businesses well outside London, including Oxford.</p>
-    <p>I am based in Romford and work with businesses across Havering, East London and Essex, and remotely anywhere in the UK.</p>
+    <p>Apex Designs started with a simple idea: give small businesses the kind of website usually reserved for companies with big budgets. Each project starts with understanding your business, your audience and what you want the site to achieve. Then we design and build something that fits.</p>
+    <p>We are a small, hands-on team, so you get real attention from start to finish. You will never be passed to an account manager or wait days for a reply. Our clients range from Damal, a Somali restaurant in East London, to Al Ansaar, a charity in Oxford.</p>
+    <p>We are based in Romford and work with businesses across Havering, East London and Essex, and remotely anywhere in the UK.</p>
   </section>
   <section class="section">
     <div class="container">
-      <span class="eyebrow">What I care about</span>
-      <h2>How I work</h2>
+      <span class="eyebrow">What we care about</span>
+      <h2>How we work</h2>
       <div class="grid-3" data-reveal-stagger>{values.map((v) => <article class="card" data-spotlight><h3>{v.title}</h3><p class="muted">{v.text}</p></article>)}</div>
     </div>
   </section>

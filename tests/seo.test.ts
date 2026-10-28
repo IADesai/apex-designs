@@ -49,9 +49,9 @@ describe('businessJsonLd', () => {
     expect(ld.aggregateRating).toBeUndefined();
     expect(ld.review).toBeUndefined();
   });
-  it('omits telephone while the WhatsApp number is a placeholder', () => {
+  it('publishes the real WhatsApp number as the business telephone', () => {
     const ld = businessJsonLd([]) as any;
-    expect(ld.telephone).toBeUndefined();
+    expect(ld.telephone).toBe('+447486600030');
   });
 });
 

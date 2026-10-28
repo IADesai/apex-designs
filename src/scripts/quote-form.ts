@@ -52,7 +52,7 @@ if (form) {
     const elapsed = Math.round(performance.now() - renderedAt);
     const out = await submit({ ...fields, elapsed, ...tracker.leadContext() });
 
-    if (out.ok) { setState('sent', 'Thanks! Your message is with me and I will get back to you soon.'); form.reset(); return; }
+    if (out.ok) { setState('sent', 'Thanks! Your message is with us and we will get back to you soon.'); form.reset(); return; }
     if (out.kind === 'busy') return;
     if (out.kind === 'invalid') { setState('idle'); showErrors(out.errors); return; }
     if (out.kind === 'unconfigured') {
@@ -61,6 +61,6 @@ if (form) {
       window.location.href = buildMailto(site.email, visible);
       return;
     }
-    setState('error', 'Sorry, that did not send. Please message me on WhatsApp or by email using the links alongside.');
+    setState('error', 'Sorry, that did not send. Please message us on WhatsApp or by email using the links alongside.');
   });
 }

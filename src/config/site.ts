@@ -5,9 +5,8 @@ export const site = {
   name: 'Apex Designs',
   url: 'https://apexdesigns.org.uk',
   tagline: 'Websites that click!',
-  founder: 'Ibrahim',
   email: 'hello@apexdesigns.org.uk', // SET ME: your Hostinger mailbox
-  whatsapp: PLACEHOLDER_WHATSAPP as string, // SET ME: international format, digits only, e.g. 447912345678
+  whatsapp: '447486600030' as string, // international format, digits only
   base: { locality: 'Romford', borough: 'Havering', region: 'Greater London', country: 'GB' },
   areasServed: ['Romford', 'Havering', 'East London', 'Essex', 'London', 'United Kingdom'],
   social: { instagram: '', linkedin: '' },

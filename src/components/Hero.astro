@@ -1,45 +1,100 @@
 ---
-import { Image } from 'astro:assets';
-import logo from '../assets/logo/apex-logo.png';
+import { makeNoise } from '../scripts/hero/terrain';
+
+// Static fallback skyline (no WebGL, reduced motion, save-data): layered ridges from the same noise as the 3D scene.
+const W = 1600, H = 900;
+const noise = makeNoise(11);
+type Peak = { x: number; h: number; w: number };
+function ridgePoints(seed: number, base: number, amp: number, freq: number, peak?: Peak): [number, number][] {
+  const pts: [number, number][] = [];
+  for (let x = 0; x <= W; x += 8) {
+    let y = 0, a = 1, f = freq;
+    for (let o = 0; o < 5; o++) { y += a * (1 - Math.abs(noise(x * f + seed * 17.3, seed * 3.1))); a *= 0.5; f *= 2.15; }
+    let h = base - amp * y;
+    if (peak) h -= peak.h * Math.pow(Math.max(0, 1 - Math.abs(x - peak.x) / peak.w), 1.6);
+    pts.push([x, +h.toFixed(1)]);
+  }
+  return pts;
+}
+const toPath = (pts: [number, number][]) => `M0,${H} L${pts.map(([x, y]) => `${x},${y}`).join(' L')} L${W},${H} Z`;
+const massif = ridgePoints(3, 730, 100, 0.006, { x: 1080, h: 320, w: 480 });
+const summit = massif.reduce((a, b) => (b[1] < a[1] ? b : a));
+const layers = [
+  { d: toPath(ridgePoints(1, 520, 120, 0.0035)), fill: '#e6e4d3' },
+  { d: toPath(ridgePoints(2, 600, 150, 0.0045)), fill: '#d2d5c6' },
+  { d: toPath(massif), fill: '#5c6161' },
+  { d: toPath(ridgePoints(4, 740, 110, 0.007)), fill: '#7d8f80' },
+  { d: toPath(ridgePoints(5, 800, 80, 0.009)), fill: '#3e7d6e' },
+  { d: toPath(ridgePoints(6, 870, 50, 0.013)), fill: '#2b5248' },
+];
+// Snow: everything above a ragged line, clipped to the massif.
+const snowPts: string[] = [];
+for (let x = W; x >= 0; x -= 12) snowPts.push(`${x},${(summit[1] + 120 + 38 * noise(x * 0.02, 9.5) + 14 * noise(x * 0.09, 2.2)).toFixed(1)}`);
+const snowPath = `M0,0 H${W} L${snowPts.join(' L')} Z`;
 ---
 <section class="hero" data-hero="fallback" aria-labelledby="hero-title">
-  <div class="container grid">
+  <div class="scene" aria-hidden="true">
+    <svg class="fallback" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMax slice">
+      <defs><clipPath id="massif-clip"><path d={layers[2].d} /></clipPath></defs>
+      {layers.slice(0, 3).map((l) => <path d={l.d} fill={l.fill} />)}
+      <path d={snowPath} fill="#f4f5f0" clip-path="url(#massif-clip)" />
+      <g transform={`translate(${summit[0]} ${summit[1]})`}>
+        <rect x="-1.5" y="-46" width="3" height="46" fill="#3b3f40" />
+        <path d="M1.5,-46 C10,-50 18,-40 30,-44 L30,-26 C18,-22 10,-32 1.5,-28 Z" fill="#3e7d6e" />
+      </g>
+      {layers.slice(3).map((l) => <path d={l.d} fill={l.fill} />)}
+    </svg>
+    <canvas data-hero-canvas></canvas>
+  </div>
+  <div class="container">
     <div class="copy">
       <span class="eyebrow">Romford · East London · Essex · UK-wide</span>
       <h1 id="hero-title">Websites that <span class="accent">click.</span><span class="sub">Web design in Romford &amp; East London</span></h1>
-      <p class="lead">I'm Ibrahim, a one-person web studio building fast, custom websites for local businesses. Clear prices from £300, and you deal with me from the first call to launch day.</p>
+      <p class="lead">We're Apex Designs, a Romford web studio building fast, custom websites for businesses across the UK. Clear prices from £300, and one dedicated team from the first call to launch day.</p>
       <div class="ctas">
         <a class="btn btn-primary btn-display" href="/services/" data-track="hero-packages" data-magnetic>View services</a>
         <a class="btn btn-ghost" href="/quote/" data-track="hero-quote">Get a free quote</a>
       </div>
-      <p class="proof"><span aria-hidden="true">★★★★★</span> Rated <strong>Excellent</strong> on Google · 5 reviews</p>
-    </div>
-    <div class="visual" aria-hidden="true">
-      <Image class="fallback" src={logo} alt="" widths={[320, 520, 760]} sizes="(max-width: 900px) 70vw, 520px" loading="eager" />
-      <canvas data-hero-canvas></canvas>
+      <p class="proof"><span aria-hidden="true">★★★★★</span> Rated <strong>Excellent</strong> on Google</p>
     </div>
   </div>
 </section>
 
 <style>
-  .hero { position: relative; padding: clamp(120px, 14vw, 170px) 0 clamp(40px, 6vw, 80px); overflow: hidden; }
-  .hero::before { content: ''; position: absolute; inset: auto -10% -30% 40%; height: 70%; background: radial-gradient(closest-side, rgb(62 125 110 / 0.1), transparent); pointer-events: none; }
-  .grid { position: relative; display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(24px, 4vw, 64px); align-items: center; min-height: min(78svh, 760px); }
-  .copy { position: relative; z-index: 1; }
+  .hero { position: relative; isolation: isolate; overflow: hidden; display: grid; align-items: center; min-height: min(100svh, 980px); padding: clamp(130px, 13vw, 170px) 0 clamp(140px, 14vw, 220px); }
+  /* Sky: cream at the top, warm haze at the horizon (the 3D fog uses the same colour), soft sun glow. */
+  .scene {
+    position: absolute; inset: 0; z-index: -1;
+    background:
+      radial-gradient(55% 45% at 30% 16%, rgb(255 236 190 / 0.5), transparent 70%),
+      linear-gradient(180deg, #fffff2 0%, #f8f4e3 52%, #f1ecd7 100%);
+  }
+  .scene svg, .scene canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .scene canvas { opacity: 0; transition: opacity 1.4s var(--ease); }
+  .scene .fallback { transition: opacity 1s var(--ease); }
+  .hero[data-hero='live'] .scene canvas { opacity: 1; }
+  .hero[data-hero='live'] .scene .fallback { opacity: 0; }
+  /* Keeps the copy readable and blends the bottom of the scene into the page. */
+  .scene::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background:
+      linear-gradient(90deg, rgb(255 255 242 / 0.92) 0%, rgb(255 255 242 / 0.72) 32%, rgb(255 255 242 / 0) 60%),
+      linear-gradient(180deg, rgb(255 255 242 / 0) 80%, var(--bg) 100%);
+  }
+  .copy { position: relative; max-width: 640px; }
   h1 { max-width: 12ch; }
   .sub { display: block; margin-top: 0.55em; font: 500 clamp(1rem, 1.5vw, 1.2rem)/1.3 var(--font-body); letter-spacing: 0.01em; color: var(--text-dim); }
+  .lead { color: var(--text); }
   .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin: 30px 0 22px; }
   .proof { font-size: 0.92rem; color: var(--text-dim); }
   .proof span { color: #f5b301; letter-spacing: 2px; margin-right: 6px; }
-  .visual { position: relative; aspect-ratio: 1 / 0.95; width: 100%; }
-  .visual canvas, .visual :global(.fallback) { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .visual :global(.fallback) { object-fit: contain; padding: 6%; transition: opacity 0.8s; }
-  canvas { opacity: 0; transition: opacity 1s var(--ease); }
-  .hero[data-hero='live'] canvas { opacity: 1; }
-  .hero[data-hero='live'] .visual :global(.fallback) { opacity: 0; }
   @media (max-width: 900px) {
-    .grid { grid-template-columns: 1fr; min-height: 0; }
-    .visual { order: -1; max-width: 460px; margin: -20px auto 0; aspect-ratio: 1 / 0.8; }
+    .hero { align-items: start; min-height: 0; padding-bottom: min(78vw, 460px); }
+    .scene::after {
+      background:
+        linear-gradient(180deg, rgb(255 255 242 / 0.94) 0%, rgb(255 255 242 / 0.86) 48%, rgb(255 255 242 / 0) 70%),
+        linear-gradient(180deg, rgb(255 255 242 / 0) 88%, var(--bg) 100%);
+    }
   }
 </style>
 
