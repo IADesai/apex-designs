@@ -6,7 +6,7 @@ Everything you need to take the new site live, connect the mini-CRM, and keep yo
 
 Edit `src/config/site.ts`:
 
-- `email`: your Hostinger mailbox, e.g. `hello@apexdesigns.org.uk`
+- `email`: your Hostinger mailbox, e.g. `info@apexdesigns.org.uk`
 - `whatsapp`: your number in international format, digits only, e.g. `447912345678`
 
 The build prints a warning until the WhatsApp placeholder is replaced.
