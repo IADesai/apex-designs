@@ -5,7 +5,7 @@ sector: Restaurant
 location: Whitechapel, East London
 summary: A vibrant website for a Somali restaurant in Whitechapel, built around the Damal green and inspired by the marbling of Mecca.
 image: ../../assets/work/damal-restaurant.png
-order: 3
+order: 5
 services: [Custom design, Multi-page website, Brand colour system]
 ---
 

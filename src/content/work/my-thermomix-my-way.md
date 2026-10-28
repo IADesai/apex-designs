@@ -4,7 +4,7 @@ client: My Thermomix My Way
 sector: Sales funnel
 summary: A simple, streamlined sales funnel whose job is to route every visitor to the right salesperson, quickly.
 image: ../../assets/work/my-thermomix-my-way.png
-order: 5
+order: 7
 services: [Funnel design, Lead routing, Single-page website]
 ---
 

@@ -5,7 +5,7 @@ sector: Banqueting & events
 location: East London
 summary: A modern, contemporary website for a newly opened banqueting suite that needed to match an established visual identity.
 image: ../../assets/work/damal-banqueting.png
-order: 4
+order: 6
 services: [Custom design, Multi-page website, Event enquiries]
 ---
 

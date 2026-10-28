@@ -12,7 +12,7 @@ const root = new URL('../', import.meta.url);
 const p = (rel) => fileURLToPath(new URL(rel, root));
 
 // Projects without fresh screenshots keep their older render until they get some.
-const PROJECTS = ['al-ansaar', 'whitebeard'];
+const PROJECTS = ['al-ansaar', 'whitebeard', 'palestinu', 'top-looks'];
 
 const W = 1600, H = 1000;
 

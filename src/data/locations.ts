@@ -36,7 +36,7 @@ export const locations: Location[] = [
       { q: 'Do you meet clients in person in Romford?', a: 'Yes. We are Romford-based and happy to meet locally, though most of the process works well over WhatsApp and video calls.' },
       { q: 'Can you help my Romford business show up on Google Maps?', a: 'Yes. The Premium package includes setting up and optimising your Google Business Profile, which is what powers the map results.' },
     ],
-    work: ['whitebeard', 'my-thermomix-my-way'],
+    work: ['top-looks', 'whitebeard'],
   },
   {
     slug: 'web-design-east-london',
@@ -105,6 +105,6 @@ export const locations: Location[] = [
       { q: 'How does working remotely actually work?', a: 'A video call to understand your business, a written plan with dates, then progress links you can open on any device. Feedback goes over WhatsApp or email.' },
       { q: 'Do you have clients outside London?', a: 'Yes, including a client in Oxford. Location makes no difference to how the project runs.' },
     ],
-    work: ['al-ansaar', 'whitebeard'],
+    work: ['al-ansaar', 'palestinu'],
   },
 ];
