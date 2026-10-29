@@ -42,8 +42,9 @@ import { breadcrumbJsonLd } from '../lib/seo';
 
     <aside class="card side">
       <h2 class="h3">Prefer to chat?</h2>
-      <p class="muted">Message us directly on WhatsApp or by email.</p>
+      <p class="muted">Message us directly on WhatsApp, Instagram or by email.</p>
       <a class="btn btn-ghost" href={whatsappUrl(site.whatsapp, DEFAULT_WA_TEXT)} data-wa target="_blank" rel="noopener">WhatsApp us</a>
+      <a class="btn btn-ghost" href={site.social.instagram} target="_blank" rel="noopener">DM us on Instagram</a>
       <a class="btn btn-ghost" href={`mailto:${site.email}`}>{site.email}</a>
       <noscript><p class="muted">JavaScript is turned off, so the form cannot send. Please use WhatsApp or email instead.</p></noscript>
     </aside>

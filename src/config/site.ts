@@ -9,7 +9,8 @@ export const site = {
   whatsapp: '447486600030' as string, // international format, digits only
   base: { locality: 'Romford', borough: 'Havering', region: 'Greater London', country: 'GB' },
   areasServed: ['Romford', 'Havering', 'East London', 'Essex', 'London', 'United Kingdom'],
-  social: { instagram: '', linkedin: '' },
+  instagramHandle: 'apexdesigns.ig',
+  social: { instagram: 'https://www.instagram.com/apexdesigns.ig/', linkedin: '' },
 } as const;
 
 export function hasRealWhatsApp(): boolean {
