@@ -76,6 +76,13 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   transition: box-shadow 0.3s var(--ease), translate 0.3s var(--ease);
 }
 [data-spotlight]:hover { box-shadow: var(--shadow); translate: 0 -3px; }
+/* The spotlight itself: a soft glow that follows the pointer (motion.ts sets --mx / --my). */
+[data-spotlight]::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(340px circle at var(--mx, 50%) var(--my, 50%), rgb(243 217 122 / 0.22), transparent 65%);
+  opacity: 0; transition: opacity 0.4s var(--ease);
+}
+@media (hover: hover) { [data-spotlight]:hover::after { opacity: 1; } }
 
 .grid-3 { display: grid; gap: clamp(16px, 2vw, 24px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
 .grid-2 { display: grid; gap: clamp(16px, 2vw, 24px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }

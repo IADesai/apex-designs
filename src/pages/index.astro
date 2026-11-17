@@ -9,6 +9,7 @@ import CtaBand from '../components/CtaBand.astro';
 import { packages } from '../data/packages';
 import { reviews } from '../data/reviews';
 import { locations } from '../data/locations';
+import { site } from '../config/site';
 
 // The four most recent projects keep the two-column grid even; the rest live on /work/.
 const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order).slice(0, 4);
@@ -82,6 +83,9 @@ const steps = [
       <span class="eyebrow">Reviews</span>
       <h2>Rated <span class="accent">Excellent</span> on Google</h2>
       <div class="grid-3 reviews" data-reveal-stagger>{reviews.map((r) => <ReviewCard review={r} />)}</div>
+      <div class="review-links" data-reveal>
+        <a class="btn btn-ghost" href={site.google.profileUrl} target="_blank" rel="noopener" data-track="reviews-google">Read our reviews on Google</a>
+      </div>
     </div>
   </section>
 
@@ -110,6 +114,7 @@ const steps = [
   .head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
   .work-sec { background: var(--surface-2); }
   .pk, .reviews { margin-top: 40px; }
+  .review-links { margin-top: 28px; }
   .steps { list-style: none; padding: 0; margin: 40px 0 0; display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
   .areas { align-items: center; }
   .area-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }

@@ -155,6 +155,21 @@ export function terrainColor(h: number, up: number, detail: number, land: Pick<L
   return mix(c, PALETTE.snow, snow);
 }
 
+/**
+ * Soft sun shadow on a height field: 1 = fully lit, 0 = in shadow. Marches from the point towards
+ * the sun (`sun` is a unit vector) and darkens as the ray passes close to, or under, the ground.
+ * Used once at start-up to bake shadows into the terrain colours, so it costs nothing per frame.
+ */
+export function sunShadow(heightAt: (x: number, z: number) => number, x: number, y: number, z: number, sun: readonly [number, number, number], reach = 80, softness = 5): number {
+  let light = 1;
+  for (let t = 1.2; t < reach; t += Math.max(1, t * 0.14)) {
+    const clearance = y + sun[1] * t - heightAt(x + sun[0] * t, z + sun[2] * t);
+    if (clearance <= 0) return 0;
+    light = Math.min(light, (softness * clearance) / t);
+  }
+  return Math.min(1, light);
+}
+
 /** Flag cloth displacement: a travelling wave that grows towards the free edge, with gusts. */
 export function flagWave(u: number, v: number, t: number): { dz: number; dy: number; dx: number } {
   const gust = 0.75 + 0.35 * Math.sin(t * 0.7) + 0.15 * Math.sin(t * 1.9);

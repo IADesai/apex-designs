@@ -13,5 +13,5 @@ export default defineConfig({
     '/privacy-policy': '/privacy/',
     '/terms-and-conditions': '/terms/',
   },
-  integrations: [sitemap({ filter: (page) => !page.includes('/admin/') })],
+  integrations: [sitemap({ filter: (page) => !page.includes('/admin/') && !page.includes('/portal/') })],
 });

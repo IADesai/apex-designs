@@ -1,5 +1,6 @@
 ---
 import { makeNoise } from '../scripts/hero/terrain';
+import { site } from '../config/site';
 
 // Static fallback skyline (no WebGL, reduced motion, save-data): layered ridges from the same noise as the 3D scene.
 const W = 1600, H = 900;
@@ -55,7 +56,7 @@ const snowPath = `M0,0 H${W} L${snowPts.join(' L')} Z`;
         <a class="btn btn-primary btn-display" href="/services/" data-track="hero-packages" data-magnetic>View services</a>
         <a class="btn btn-ghost" href="/quote/" data-track="hero-quote">Get a free quote</a>
       </div>
-      <p class="proof"><span aria-hidden="true">★★★★★</span> Rated <strong>Excellent</strong> on Google</p>
+      <p class="proof"><a href={site.google.profileUrl} target="_blank" rel="noopener" data-track="hero-reviews"><span aria-hidden="true">★★★★★</span> Rated <strong>Excellent</strong> on Google</a></p>
     </div>
   </div>
   <a class="scroll-cue" href="#why-apex" data-track="hero-scroll">
@@ -108,6 +109,15 @@ const snowPath = `M0,0 H${W} L${snowPts.join(' L')} Z`;
   .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin: 30px 0 22px; }
   .proof { font-size: 0.92rem; color: var(--text-dim); }
   .proof span { color: #f5b301; letter-spacing: 2px; margin-right: 6px; }
+  .proof a { text-decoration: none; }
+  .proof a:hover strong { text-decoration: underline; }
+  /* The copy rises in line by line on load. Pure CSS, so it works before any script and is skipped under reduced motion. */
+  .copy > * { animation: rise 0.9s var(--ease) both; }
+  .copy > :nth-child(2) { animation-delay: 0.08s; }
+  .copy > :nth-child(3) { animation-delay: 0.18s; }
+  .copy > :nth-child(4) { animation-delay: 0.28s; }
+  .copy > :nth-child(5) { animation-delay: 0.38s; }
+  @keyframes rise { from { opacity: 0; translate: 0 26px; } }
   @media (max-width: 900px) {
     .hero { align-items: start; min-height: 0; padding-bottom: min(78vw, 460px); }
     .scroll-cue { display: none; } /* phones scroll naturally; the range fills the bottom instead */

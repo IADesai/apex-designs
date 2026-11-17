@@ -34,7 +34,8 @@ export function businessJsonLd(revs: Review[] = allReviews): Record<string, unkn
     areaServed: site.areasServed.map((name) => ({ '@type': 'Place', name })),
   };
   if (hasRealWhatsApp()) ld.telephone = `+${site.whatsapp}`;
-  const sameAs = [site.social.instagram, site.social.linkedin].filter(Boolean);
+  ld.hasMap = site.google.profileUrl;
+  const sameAs = [site.google.profileUrl, site.social.instagram, site.social.linkedin].filter(Boolean);
   if (sameAs.length) ld.sameAs = sameAs;
   if (revs.length) {
     const avg = revs.reduce((sum, r) => sum + r.rating, 0) / revs.length;

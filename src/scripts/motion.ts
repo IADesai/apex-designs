@@ -32,6 +32,12 @@ export function initMotion(): void {
     gsap.from(el.children, { y: 36, autoAlpha: 0, duration: 0.9, stagger: 0.09, ease: 'power3.out', clearProps: 'transform', scrollTrigger: { trigger: el, start: 'top 85%', once: true } });
   });
 
+  // Section headings rise in as they arrive (anything inside an already-revealed block is left alone).
+  gsap.utils.toArray<HTMLElement>('main .section h2, main .section .container > .eyebrow, main .section .container > .lead').forEach((el) => {
+    if (el.closest('[data-reveal], [data-reveal-stagger]')) return;
+    gsap.from(el, { y: 28, autoAlpha: 0, duration: 0.9, ease: 'power3.out', clearProps: 'transform', scrollTrigger: { trigger: el, start: 'top 90%', once: true } });
+  });
+
   if (fine) {
     document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((el) => {
       const xTo = gsap.quickTo(el, 'x', { duration: 0.5, ease: 'power3.out' });

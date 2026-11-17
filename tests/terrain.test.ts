@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { makeNoise, makeLandscape, terrainColor, flagWave, PALETTE } from '../src/scripts/hero/terrain';
+import { makeNoise, makeLandscape, terrainColor, flagWave, sunShadow, PALETTE } from '../src/scripts/hero/terrain';
 
 describe('makeNoise', () => {
   it('is deterministic for a seed and stays roughly within [-1, 1]', () => {
@@ -71,5 +71,17 @@ describe('flagWave', () => {
       expect(Math.abs(w.dz)).toBeLessThan(0.5);
     }
     expect(maxDz).toBeGreaterThan(0.1);
+  });
+});
+
+describe('sunShadow', () => {
+  const sun = [-0.8, 0.6, 0] as const;
+  it('leaves open flat ground fully lit', () => {
+    expect(sunShadow(() => 0, 0, 0.2, 0, sun)).toBe(1);
+  });
+  it('puts ground behind a ridge in shadow, and fades back to light further away', () => {
+    const ridge = (x: number) => (x < -10 && x > -14 ? 20 : 0);
+    expect(sunShadow(ridge, -6, 0.2, 0, sun)).toBe(0);
+    expect(sunShadow(ridge, 60, 0.2, 0, sun)).toBe(1);
   });
 });

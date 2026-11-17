@@ -37,12 +37,13 @@ const areas = [
         <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
         <li><a href={whatsappUrl(site.whatsapp, DEFAULT_WA_TEXT)} data-wa rel="noopener" target="_blank">WhatsApp</a></li>
         <li><a href={site.social.instagram} rel="noopener" target="_blank">Instagram @{site.instagramHandle}</a></li>
+        <li><a href={site.google.profileUrl} rel="noopener" target="_blank" data-track="footer-reviews">Reviews on Google</a></li>
       </ul>
     </div>
   </div>
   <div class="legal">
     <div class="container legal-inner">
-      <span>Copyright © {year} Apex Designs · Romford, Greater London</span>
+      <span>Copyright © {year} Apex Designs · Romford, Greater London{site.icoNumber && <> · ICO registration {site.icoNumber}</>}</span>
       <span class="links">
         <a href="/cookies/">Cookie Policy (UK)</a><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms and Conditions</a>
         <button type="button" class="linklike" data-consent-open>Cookie settings</button>

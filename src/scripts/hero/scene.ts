@@ -1,8 +1,12 @@
 import * as THREE from 'three';
-import { makeLandscape, terrainColor, flagWave, rng } from './terrain';
+import { makeLandscape, terrainColor, flagWave, sunShadow, rng, PALETTE, type Landscape } from './terrain';
 
 // Haze colour: matches the CSS sky at the horizon, so distant ranges melt into the page.
 const HAZE = '#f1ecd7';
+// Warm sun from the upper left. The same direction lights the scene and casts the baked shadows.
+const SUN = new THREE.Vector3(-70, 55, 30);
+const SUN_DIR = SUN.clone().normalize().toArray() as [number, number, number];
+type HeightAt = (x: number, z: number) => number;
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
@@ -38,18 +42,69 @@ function buildTerrain(step: number) {
   geo.setIndex(new THREE.BufferAttribute(idx, 1));
   geo.computeVertexNormals();
 
+  // Ground height anywhere on the grid (bilinear), for shadows and for planting trees.
+  const heightAt: HeightAt = (x, z) => {
+    const fi = Math.min(nx - 1.001, Math.max(0, ((x - x0) / (x1 - x0)) * (nx - 1)));
+    const fj = Math.min(nz - 1.001, Math.max(0, ((z0 - z) / (z0 - z1)) * (nz - 1)));
+    const i = Math.floor(fi), j = Math.floor(fj), u = fi - i, v = fj - j;
+    const k = (j * nx + i) * 3 + 1;
+    const a = pos[k], b = pos[k + 3], c2 = pos[k + nx * 3], d = pos[k + nx * 3 + 3];
+    return a + (b - a) * u + (c2 - a) * v + (a - b - c2 + d) * u * v;
+  };
+
   const normals = geo.getAttribute('normal');
   const colors = new Float32Array(pos.length);
   const c = new THREE.Color();
-  for (let v = 0; v < nx * nz; v++) {
-    const x = pos[v * 3], y = pos[v * 3 + 1], z = pos[v * 3 + 2];
-    const [r, g, b] = terrainColor(y, normals.getY(v), land.detail(x, z), land);
-    c.setRGB(r, g, b, THREE.SRGBColorSpace);
-    colors[v * 3] = c.r; colors[v * 3 + 1] = c.g; colors[v * 3 + 2] = c.b;
+  const R = 3; // cells: how far to look when judging whether a point sits in a hollow
+  for (let j = 0; j < nz; j++) {
+    for (let i = 0; i < nx; i++) {
+      const v = j * nx + i;
+      const x = pos[v * 3], y = pos[v * 3 + 1], z = pos[v * 3 + 2];
+      const [r, g, b] = terrainColor(y, normals.getY(v), land.detail(x, z), land);
+      // Baked light: cast shadows from the sun, plus darker gullies and hollows. Shadows lean cool.
+      const lit = sunShadow(heightAt, x, y + 0.25, z, SUN_DIR);
+      const il = Math.max(0, i - R), ir = Math.min(nx - 1, i + R), ju = Math.max(0, j - R), jd = Math.min(nz - 1, j + R);
+      const around = (pos[(j * nx + il) * 3 + 1] + pos[(j * nx + ir) * 3 + 1] + pos[(ju * nx + i) * 3 + 1] + pos[(jd * nx + i) * 3 + 1]) / 4;
+      const s = (0.56 + 0.44 * lit) * (1 - clamp01((around - y) * 0.1) * 0.35);
+      c.setRGB(r * s * (0.9 + 0.1 * lit), g * s * (0.95 + 0.05 * lit), b * s, THREE.SRGBColorSpace);
+      colors[v * 3] = c.r; colors[v * 3 + 1] = c.g; colors[v * 3 + 2] = c.b;
+    }
   }
   geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   const mesh = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ vertexColors: true }));
-  return { mesh, top };
+  return { mesh, top, land, heightAt };
+}
+
+/** Pines on the lower slopes: one instanced mesh, placed on gentle ground below the tree line. */
+function buildForest(land: Landscape, heightAt: HeightAt, count: number): THREE.InstancedMesh {
+  const rand = rng(99);
+  const geo = new THREE.ConeGeometry(0.55, 2.3, 6, 1);
+  geo.translate(0, 1.15, 0);
+  const mesh = new THREE.InstancedMesh(geo, new THREE.MeshLambertMaterial(), count);
+  const m = new THREE.Matrix4(), q = new THREE.Quaternion(), p = new THREE.Vector3(), s = new THREE.Vector3();
+  const up = new THREE.Vector3(0, 1, 0);
+  const c = new THREE.Color();
+  let n = 0;
+  for (let tries = 0; n < count && tries < count * 14; tries++) {
+    const x = -104 + rand() * 208, z = 10 - rand() * 100;
+    const y = heightAt(x, z);
+    const clump = land.detail(x * 0.6, z * 0.6);
+    if (y > land.treeLine - 2 + clump * 3) continue;
+    if (Math.hypot(heightAt(x + 1, z) - y, heightAt(x, z + 1) - y) > 0.8) continue;
+    if (rand() > 0.3 + 0.7 * clamp01(clump + 0.55)) continue; // clearings and thicker stands
+    const h = 0.7 + rand() * 0.75;
+    p.set(x, y - 0.2, z);
+    s.set(h * (0.85 + rand() * 0.3), h, h * (0.85 + rand() * 0.3));
+    mesh.setMatrixAt(n, m.compose(p, q.setFromAxisAngle(up, rand() * Math.PI), s));
+    const shade = (0.55 + 0.45 * sunShadow(heightAt, x, y + 1.6, z, SUN_DIR)) * (0.78 + rand() * 0.34);
+    const [r, g, b] = PALETTE.forestDeep;
+    mesh.setColorAt(n, c.setRGB(r * shade, g * shade, b * shade, THREE.SRGBColorSpace));
+    n++;
+  }
+  mesh.count = n;
+  mesh.instanceMatrix.needsUpdate = true;
+  if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+  return mesh;
 }
 
 function canvasTexture(w: number, h: number, draw: (g: CanvasRenderingContext2D) => void): THREE.CanvasTexture {
@@ -122,12 +177,12 @@ export function initHero(root: HTMLElement): (() => void) | null {
   const camera = new THREE.PerspectiveCamera(45, 1, 0.5, 520);
 
   // Ground
-  const { mesh: terrain, top } = buildTerrain(lowPower ? 1.8 : 1.1);
-  scene.add(terrain);
+  const { mesh: terrain, top, land, heightAt } = buildTerrain(lowPower ? 1.8 : 1.1);
+  scene.add(terrain, buildForest(land, heightAt, lowPower ? 450 : 1500));
 
   // Light: warm sun from the upper left, cool fill from the ground.
   const sun = new THREE.DirectionalLight('#fff1d6', 3.1);
-  sun.position.set(-70, 55, 30);
+  sun.position.copy(SUN);
   scene.add(sun, new THREE.HemisphereLight('#fffdf0', '#3b574f', 0.9));
 
   // Flag on the true summit.

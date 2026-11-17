@@ -48,7 +48,22 @@ export function sortJourney(events: JourneyEvent[]): JourneyEvent[] {
   return [...events].sort((a, b) => a.created_at.localeCompare(b.created_at));
 }
 
-export function leadIdFromHash(hash: string): string | null {
-  const m = /(?:^#|&)lead=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/i.exec(hash);
+const UUID = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}';
+
+function idFromHash(hash: string, key: string): string | null {
+  const m = new RegExp(`(?:^#|&)${key}=(${UUID})`, 'i').exec(hash);
   return m ? m[1] : null;
+}
+
+export function leadIdFromHash(hash: string): string | null {
+  return idFromHash(hash, 'lead');
+}
+
+export function requestIdFromHash(hash: string): string | null {
+  return idFromHash(hash, 'request');
+}
+
+/** A client's private portal link. The key sits in the fragment so it never reaches server logs. */
+export function portalUrl(siteUrl: string, token: string): string {
+  return `${new URL('/portal/', siteUrl).toString()}#key=${token}`;
 }

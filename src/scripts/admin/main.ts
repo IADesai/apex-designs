@@ -1,6 +1,7 @@
 import { createApi, type Api, type Lead } from './api';
 import { h } from './dom';
-import { LEAD_STATUSES, CHANNELS, trackedUrl, shareText, conversionRate, eventLabel, sortJourney, leadIdFromHash, slugFromLabel, type LeadStatus } from '../../lib/admin-helpers';
+import { LEAD_STATUSES, CHANNELS, trackedUrl, shareText, conversionRate, eventLabel, sortJourney, leadIdFromHash, requestIdFromHash, slugFromLabel, type LeadStatus } from '../../lib/admin-helpers';
+import { requestsView, requestDetail, clientsView } from './requests';
 import { site } from '../../config/site';
 
 const root = document.getElementById('admin');
@@ -38,10 +39,14 @@ async function route(api: Api): Promise<void> {
   }
 
   const leadId = leadIdFromHash(window.location.hash);
-  const tab = leadId ? 'leads' : new URLSearchParams(window.location.hash.slice(1)).get('tab') ?? 'leads';
+  const requestId = requestIdFromHash(window.location.hash);
+  const tab = leadId ? 'leads' : requestId ? 'requests' : new URLSearchParams(window.location.hash.slice(1)).get('tab') ?? 'leads';
   show(nav(api, tab), h('div', { id: 'view' }, h('p', { class: 'muted' }, 'Loading…')));
   try {
     const content = leadId ? await leadDetail(api, leadId)
+      : requestId ? await requestDetail(api, requestId)
+      : tab === 'requests' ? await requestsView(api)
+      : tab === 'clients' ? await clientsView(api)
       : tab === 'links' ? await linksView(api)
       : tab === 'overview' ? await overviewView(api)
       : await leadsView(api);
@@ -68,7 +73,7 @@ function loginView(api: Api): HTMLElement {
 function nav(api: Api, tab: string): HTMLElement {
   const link = (id: string, label: string) => h('a', { href: `#tab=${id}`, class: tab === id ? 'active' : undefined }, label);
   return h('nav', { class: 'admin-nav', 'aria-label': 'Dashboard' },
-    link('leads', 'Leads'), link('links', 'Tracked links'), link('overview', 'Overview'),
+    link('leads', 'Leads'), link('requests', 'Change requests'), link('clients', 'Clients'), link('links', 'Tracked links'), link('overview', 'Overview'),
     h('button', { class: 'btn btn-ghost', type: 'button', onclick: () => { void api.signOut(); } }, 'Sign out'));
 }
 

@@ -1,0 +1,39 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { site } from '../../config/site';
+import { whatsappUrl, DEFAULT_WA_TEXT } from '../../lib/whatsapp';
+---
+<AdminLayout title="Client Portal" description="Private Apex Designs client portal for requesting website changes.">
+  <h1><img src="/favicon.png" width="32" height="32" alt="" /> Client portal</h1>
+  <div id="portal" data-email={site.email} data-wa={whatsappUrl(site.whatsapp, DEFAULT_WA_TEXT)}><p class="muted">Loading…</p></div>
+  <noscript><p>This page needs JavaScript. You can always send changes to <a href={`mailto:${site.email}`}>{site.email}</a>.</p></noscript>
+</AdminLayout>
+<script>
+  import '../../scripts/portal/main';
+</script>
+<style is:global>
+  .portal-grid { display: grid; gap: 24px; grid-template-columns: 3fr 2fr; align-items: start; margin-top: 24px; }
+  @media (max-width: 900px) { .portal-grid { grid-template-columns: 1fr; } }
+  .chat { display: grid; grid-template-rows: 1fr auto auto auto; gap: 14px; padding: 20px; min-height: min(70svh, 620px); }
+  .chat-log { display: flex; flex-direction: column; gap: 10px; overflow-y: auto; max-height: 52svh; padding-right: 4px; scroll-behavior: smooth; }
+  .bubble { max-width: 85%; padding: 12px 16px; border-radius: 16px; white-space: pre-wrap; line-height: 1.5; animation: bubble-in 0.35s var(--ease) both; }
+  .bubble.agent { align-self: flex-start; background: var(--surface-2); border-bottom-left-radius: 4px; }
+  .bubble.client { align-self: flex-end; background: var(--teal); color: #fff; border-bottom-right-radius: 4px; }
+  @keyframes bubble-in { from { opacity: 0; transform: translateY(8px); } }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { font: 600 0.9rem/1 var(--font-body); padding: 0.7em 1em; border-radius: 999px; border: 1px solid var(--teal); background: transparent; color: var(--accent); cursor: pointer; transition: background 0.2s, color 0.2s; }
+  .chip:hover { background: var(--teal); color: #fff; }
+  .admin-shell form.composer { display: flex; gap: 8px; align-items: end; margin: 0; }
+  .composer textarea { resize: none; min-height: 48px; max-height: 160px; }
+  .composer .btn { padding: 0.85em 1.1em; flex: none; }
+  .mic { width: 48px; height: 48px; flex: none; border-radius: 50%; border: 1px solid var(--line); background: #fff; color: var(--accent); cursor: pointer; display: grid; place-items: center; transition: background 0.2s, color 0.2s; }
+  .mic[aria-pressed='true'] { background: #b3261e; border-color: #b3261e; color: #fff; animation: mic-pulse 1.4s ease-out infinite; }
+  @keyframes mic-pulse { from { box-shadow: 0 0 0 0 rgb(179 38 30 / 0.45); } to { box-shadow: 0 0 0 14px rgb(179 38 30 / 0); } }
+  .admin-shell label.voice-toggle { display: flex; align-items: center; gap: 8px; font-weight: 400; font-size: 0.88rem; color: var(--text-dim); }
+  .admin-shell .voice-toggle input { width: auto; }
+  .req-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .req-list li { border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+  .req-list li:last-child { border: 0; padding: 0; }
+  .req-list time { color: var(--text-dim); font-size: 0.85rem; }
+  .req-reply { margin: 6px 0 0; padding: 8px 12px; border-left: 3px solid var(--teal); background: var(--surface-2); border-radius: 0 8px 8px 0; font-size: 0.92rem; }
+</style>

@@ -1,6 +1,6 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist", "node_modules", "supabase/functions/submit-lead"],
+  "exclude": ["dist", "node_modules", "supabase/functions/submit-lead", "supabase/functions/client-portal"],
   "compilerOptions": { "allowImportingTsExtensions": true }
 }

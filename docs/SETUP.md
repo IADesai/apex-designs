@@ -111,3 +111,37 @@ In hPanel → Domains → **DNS / Nameservers**:
 3. Click **Copy WhatsApp message** and paste it into the group.
 4. Visits through that link are counted (anonymously if people decline cookies). If someone accepts analytics and later sends a quote request, their lead shows the full journey: which link they came from and which pages they read.
 5. In **Leads**, set each lead's status (new → warm → quoted → won/lost) and keep notes.
+
+## 10. Client change requests
+
+Clients describe a change to a chat assistant (typing or talking), you approve it, and the dashboard writes the prompt for Claude.
+
+One-off setup:
+
+1. Run `supabase/migrations/20261117000000_change_requests.sql` in the SQL Editor (or `npx supabase@latest db push`).
+2. Deploy the portal function. It uses the same secrets as `submit-lead`:
+   ```bash
+   npx supabase@latest functions deploy client-portal --no-verify-jwt
+   ```
+
+Day to day:
+
+1. **Clients** → add the client. "Project notes for Claude" is where the repo, stack and brand rules go; it is added to every prompt for that client.
+2. **Copy message for client** and send it to them privately. The link is their key: anyone holding it can send requests as that client. **Turn link off** stops it working.
+3. The client opens the link and tells the assistant what they want. It asks where, what exactly and how soon, then sends it. You get an email.
+4. **Change requests** → open the request. Add a reply (the client sees it on their portal) or private notes, then **Approve** or **Decline**.
+5. Once approved, **Copy prompt for Claude** and paste it into Claude Code in that client's project. **Open in Claude** opens claude.ai with the prompt filled in instead.
+6. Mark it **In progress**, then **Done**. The client sees each step.
+
+The assistant is scripted, so it costs nothing to run. Voice uses the speech features built into the client's browser (Chrome, Edge and Safari); browsers without them just get the typing box.
+
+## 11. Data protection (ICO)
+
+- **Register with the ICO** if you have not already: most businesses that handle personal data must pay the data protection fee. Check and pay at [ico.org.uk/for-organisations/data-protection-fee](https://ico.org.uk/for-organisations/data-protection-fee/).
+- Put your registration reference in `icoNumber` in `src/config/site.ts`. It then appears in the footer and privacy policy. Leave it empty until you have one; the site never shows a made-up number.
+- Read `/privacy/` once and check it matches what you really do, especially the list of providers and the retention periods.
+- If a client or visitor asks for their data or for it to be deleted, you have one month to respond. Leads and change requests can be deleted from the Supabase table editor; deleting a client removes their requests too.
+
+## 12. Google reviews
+
+The Google Business Profile ID lives in `google` in `src/config/site.ts`. The home page, hero and footer link to the profile, and the business schema lists it. The quotes on the site are in `src/data/reviews.ts`: copy new ones from the profile word for word when you want to show them.

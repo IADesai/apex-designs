@@ -3,7 +3,8 @@ export const PLACEHOLDER_MARKERS = ['447000000000'];
 export function auditPage(html, relPath) {
   if (/<meta\s+http-equiv="refresh"/i.test(html)) return { title: undefined, errors: [] };
   const errors = [];
-  const isAdmin = relPath.startsWith('admin/');
+  // Private areas: the dashboard and the client portal.
+  const isAdmin = relPath.startsWith('admin/') || relPath.startsWith('portal/');
   const is404 = relPath === '404.html' || relPath === '404/index.html';
 
   const h1Count = (html.match(/<h1[\s>]/gi) ?? []).length;
@@ -33,7 +34,7 @@ export function auditPage(html, relPath) {
 }
 
 export function auditSitemap(xml) {
-  return /\/admin\//.test(xml) ? ['sitemap must not include /admin/'] : [];
+  return ['/admin/', '/portal/'].filter((p) => xml.includes(p)).map((p) => `sitemap must not include ${p}`);
 }
 
 export function findDuplicateTitles(pages) {

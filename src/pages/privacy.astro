@@ -3,31 +3,51 @@ import ProseLayout from '../layouts/ProseLayout.astro';
 import { site } from '../config/site';
 ---
 <ProseLayout title="Privacy Policy" heading="Privacy policy" eyebrow="Legal" description="How Apex Designs collects, uses and protects your personal data when you use this website or contact us about a project.">
-  <p><em>Last updated: 27 October 2026</em></p>
+  <p><em>Last updated: 17 November 2026</em></p>
   <h2>Who we are</h2>
-  <p>Apex Designs is a web design studio based in Romford, Greater London. We are the controller of the personal data described here. Contact: <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+  <p>Apex Designs is a web design studio based in Romford, Greater London. We are the controller of the personal data described here, under the UK GDPR and the Data Protection Act 2018. Contact: <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+  {site.icoNumber && <p>We are registered with the Information Commissioner's Office (ICO). Registration reference: <strong>{site.icoNumber}</strong>.</p>}
   <h2>What we collect</h2>
   <ul>
     <li><strong>Quote requests:</strong> your name, email, and optionally phone, business name, package and message, plus which tracked link (if any) brought you to the site.</li>
+    <li><strong>Client change requests:</strong> if you are a client and use your private portal link, we keep your name, business, what you ask us to change and the conversation with the portal assistant.</li>
     <li><strong>Analytics, only if you accept:</strong> a random visitor ID, the pages you view, buttons you click, how far you scroll, and your browser type. No ads and no third-party trackers.</li>
     <li><strong>Without your consent:</strong> if you arrive through one of our tracked links, we record one anonymous visit for that link, with no ID and nothing stored on your device.</li>
-    <li><strong>Messages you send us</strong> by email or WhatsApp.</li>
+    <li><strong>Messages you send us</strong> by email, WhatsApp or Instagram.</li>
   </ul>
+  <p>We do not ask for, and do not want, sensitive information such as health details or payment card numbers through this website.</p>
   <h2>Why, and the legal basis</h2>
   <ul>
     <li>Replying to your enquiry and preparing a quote: steps you ask for before entering a contract, and our legitimate interest in responding to business enquiries.</li>
+    <li>Handling change requests from clients: carrying out our contract with you.</li>
     <li>Analytics: your consent, which you can withdraw at any time via "Cookie settings" in the footer.</li>
     <li>Anonymous link counts: our legitimate interest in knowing which of our posts and groups bring visitors.</li>
   </ul>
+  <p>We do not use your data for automated decisions that affect you, and we do not send marketing emails from this website.</p>
   <h2>Who processes it for us</h2>
   <ul>
-    <li><strong>Supabase</strong> stores enquiries and analytics in a database hosted in the UK/EU region.</li>
+    <li><strong>Supabase</strong> stores enquiries, change requests and analytics in a database hosted in the UK/EU region.</li>
     <li><strong>Hostinger</strong> provides our email, so enquiry notifications pass through their mail servers.</li>
     <li><strong>GitHub Pages</strong> hosts the website and may log IP addresses for security.</li>
+    <li><strong>Anthropic (Claude)</strong>: once we approve a client's change request, we may use Claude, an AI assistant, to help carry it out. The description of the change is shared with it for that purpose.</li>
   </ul>
-  <p>We do not sell your data or share it with anyone else.</p>
+  <p>Some of these providers are based outside the UK. Where personal data leaves the UK, we rely on the safeguards UK data protection law recognises for that transfer. We do not sell your data or share it with anyone else.</p>
+  <h2>Voice in the client portal</h2>
+  <p>The portal lets you speak instead of typing. This is optional and off until you press the microphone. It uses the speech feature built into your browser, and some browsers (including Chrome and Safari) send the audio to their own provider to turn it into text. We receive only the text.</p>
+  <h2>Links to Google</h2>
+  <p>Our review links open our Google Business Profile. Nothing is loaded from Google until you click, and Google's own privacy policy applies once you are there.</p>
   <h2>How long we keep it</h2>
-  <p>Enquiries: up to 24 months after our last contact. Analytics events: up to 13 months. These limits are enforced by an automatic daily clean-up.</p>
+  <p>Enquiries and change requests: up to 24 months after our last contact. Analytics events: up to 13 months. These limits are enforced by an automatic daily clean-up.</p>
   <h2>Your rights</h2>
-  <p>You can ask to access, correct or delete your data, object to processing, or withdraw consent. Email <a href={`mailto:${site.email}`}>{site.email}</a>. You can also complain to the Information Commissioner's Office at <a href="https://ico.org.uk/">ico.org.uk</a>.</p>
+  <p>You can ask us to:</p>
+  <ul>
+    <li>give you a copy of your data;</li>
+    <li>correct it, or delete it;</li>
+    <li>limit how we use it, or stop using it;</li>
+    <li>pass it to you or another provider in a usable format;</li>
+    <li>stop any processing based on consent, by withdrawing that consent.</li>
+  </ul>
+  <p>Email <a href={`mailto:${site.email}`}>{site.email}</a>. It is free, and we will reply within one month.</p>
+  <h2>Complaints</h2>
+  <p>Please tell us first so we can put it right. You can also complain to the Information Commissioner's Office at <a href="https://ico.org.uk/make-a-complaint/">ico.org.uk/make-a-complaint</a> or on 0303 123 1113.</p>
 </ProseLayout>

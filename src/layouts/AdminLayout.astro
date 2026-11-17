@@ -4,6 +4,8 @@ import '@fontsource/poppins/600.css';
 import '@fontsource/playfair-display/800.css';
 import '../styles/global.css';
 import Seo from '../components/Seo.astro';
+interface Props { title?: string; description?: string }
+const { title = 'CRM Dashboard', description = 'Private Apex Designs lead dashboard.' } = Astro.props;
 ---
 <!doctype html>
 <html lang="en-GB">
@@ -11,7 +13,8 @@ import Seo from '../components/Seo.astro';
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.png" type="image/png" />
-    <Seo title="CRM Dashboard" description="Private Apex Designs lead dashboard." noindex />
+    <meta name="referrer" content="no-referrer" />
+    <Seo title={title} description={description} noindex />
   </head>
   <body>
     <main class="container admin-shell"><slot /></main>
@@ -48,4 +51,9 @@ import Seo from '../components/Seo.astro';
   .admin-shell .link { margin-bottom: 16px; }
   .admin-shell .tile strong { display: block; font: 600 2.4rem/1 var(--font-display); }
   .admin-shell .error { color: #b3261e; }
+  .admin-shell textarea[readonly] { background: var(--surface-2); font-size: 0.85rem; margin-bottom: 12px; }
+  .pill { display: inline-block; font: 600 0.72rem/1 var(--font-body); letter-spacing: 0.06em; text-transform: uppercase; padding: 0.4em 0.7em; border-radius: 999px; background: var(--surface-2); color: var(--heading); white-space: nowrap; }
+  .pill[data-status='approved'], .pill[data-status='in_progress'] { background: var(--mustard); }
+  .pill[data-status='done'] { background: var(--teal); color: #fff; }
+  .pill[data-status='declined'] { background: #f3dedc; color: #8c1d18; }
 </style>
